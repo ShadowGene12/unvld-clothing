@@ -5,6 +5,7 @@ import WorldHeroSection from "@/components/editorial/WorldHeroSection";
 import MoodStrip from "@/components/editorial/MoodStrip";
 import TraitTags from "@/components/editorial/TraitTags";
 import PiecePreviewGrid from "@/components/editorial/PiecePreviewGrid";
+import InteractiveLookbook, { LookbookHotspot } from "@/components/editorial/InteractiveLookbook";
 import DropPreviewModule from "@/components/editorial/DropPreviewModule";
 import WaitlistSignupForm from "@/components/editorial/WaitlistSignupForm";
 import CTABanner from "@/components/editorial/CTABanner";
@@ -78,6 +79,40 @@ const WorldPage = () => {
             </motion.div>
             <PiecePreviewGrid pieces={pieces} />
           </div>
+        </section>
+      )}
+
+      {/* Interactive Lookbook */}
+      {pieces.length >= 2 && (
+        <section className="py-0">
+          <InteractiveLookbook 
+            imageUrl="https://images.unsplash.com/photo-1550614000-4b95d4ed1871?q=80&w=2000&auto=format&fit=crop"
+            alt={`${world.name} Lookbook`}
+            hotspots={[
+              {
+                id: "hotspot-1",
+                x: 45,
+                y: 35,
+                product: {
+                  name: pieces[0].name,
+                  price: `$${pieces[0].price}`,
+                  slug: pieces[0].slug,
+                  image: pieces[0].heroImage
+                }
+              },
+              {
+                id: "hotspot-2",
+                x: 55,
+                y: 65,
+                product: {
+                  name: pieces[1].name,
+                  price: `$${pieces[1].price}`,
+                  slug: pieces[1].slug,
+                  image: pieces[1].heroImage
+                }
+              }
+            ]}
+          />
         </section>
       )}
 

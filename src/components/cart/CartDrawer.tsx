@@ -1,4 +1,5 @@
 import React from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { X, Plus, Minus, Trash2 } from 'lucide-react';
 import { useCart } from '@/context/CartContext';
@@ -6,18 +7,28 @@ import { useCart } from '@/context/CartContext';
 const CartDrawer: React.FC = () => {
   const { items, isCartOpen, setIsCartOpen, removeItem, updateQuantity, subtotal } = useCart();
 
-  if (!isCartOpen) return null;
-
   return (
-    <div className="fixed inset-0 z-[70]">
-      {/* Backdrop */}
-      <div
-        className="absolute inset-0 bg-foreground/20 animate-fade-in"
-        onClick={() => setIsCartOpen(false)}
-      />
+    <AnimatePresence>
+      {isCartOpen && (
+        <div className="fixed inset-0 z-[70]">
+          {/* Backdrop */}
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.3 }}
+            className="absolute inset-0 bg-foreground/20"
+            onClick={() => setIsCartOpen(false)}
+          />
 
-      {/* Drawer */}
-      <div className="absolute inset-y-0 right-0 w-full max-w-md bg-background shadow-xl animate-slide-in-right flex flex-col">
+          {/* Drawer */}
+          <motion.div
+            initial={{ x: '100%' }}
+            animate={{ x: 0 }}
+            exit={{ x: '100%' }}
+            transition={{ type: 'spring', damping: 25, stiffness: 200 }}
+            className="absolute inset-y-0 right-0 w-full max-w-md bg-background shadow-xl flex flex-col"
+          >
         {/* Header */}
         <div className="flex items-center justify-between p-4 border-b border-border">
           <h2 className="text-lg font-semibold tracking-wide">Your Cart</h2>
@@ -46,7 +57,11 @@ const CartDrawer: React.FC = () => {
           ) : (
             <div className="space-y-4">
               {items.map((item, index) => (
-                <div
+                <motion.div
+                  initial={{ opacity: 0, x: 20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  exit={{ opacity: 0, x: -20 }}
+                  transition={{ delay: index * 0.05, type: 'spring', stiffness: 300, damping: 24 }}
                   key={`${item.product.id}-${item.size}-${item.color}-${index}`}
                   className="flex gap-4 pb-4 border-b border-border"
                 >
@@ -107,7 +122,7 @@ const CartDrawer: React.FC = () => {
                       </button>
                     </div>
                   </div>
-                </div>
+                </motion.div>
               ))}
             </div>
           )}
@@ -132,8 +147,10 @@ const CartDrawer: React.FC = () => {
             </button>
           </div>
         )}
-      </div>
+      </motion.div>
     </div>
+      )}
+    </AnimatePresence>
   );
 };
 

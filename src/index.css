@@ -217,3 +217,13 @@
     @apply bg-muted animate-pulse;
   }
 }
+
+@media (pointer: fine) {
+  body {
+    cursor: none;
+  }
+  a, button, input, select, textarea, [role='button'] {
+    cursor: none !important;
+  }
+}
+

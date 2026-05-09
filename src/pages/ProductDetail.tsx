@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useParams, Navigate, Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
+import { motion } from 'framer-motion';
 import { ChevronLeft, ChevronRight, Minus, Plus, Bell, ArrowRight } from 'lucide-react';
 import { getProductBySlug, getRelatedProducts, getCollectionBySlug } from '@/data/mockData';
 import { useCart } from '@/context/CartContext';
@@ -16,7 +17,7 @@ import { toast } from '@/hooks/use-toast';
 const ProductDetail: React.FC = () => {
   const { slug } = useParams<{ slug: string }>();
   const product = slug ? getProductBySlug(slug) : undefined;
-  const { addItem } = useCart();
+  const { addItem, setIsCartOpen } = useCart();
 
   const [selectedImage, setSelectedImage] = useState(0);
   const [selectedSize, setSelectedSize] = useState('');
@@ -43,7 +44,7 @@ const ProductDetail: React.FC = () => {
     for (let i = 0; i < quantity; i++) {
       addItem(product, selectedSize, selectedColor);
     }
-    toast({ title: 'Added to cart', description: `${product.name} has been added to your cart.` });
+    setIsCartOpen(true);
   };
 
   const handleNotify = (e: React.FormEvent) => {
@@ -213,9 +214,14 @@ const ProductDetail: React.FC = () => {
             </div>
 
             {/* Add to Cart */}
-            <button onClick={handleAddToCart} className="w-full btn-hero-primary mb-4">
+            <motion.button 
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
+              onClick={handleAddToCart} 
+              className="w-full btn-hero-primary mb-4"
+            >
               Add to Cart — ${product.price * quantity}
-            </button>
+            </motion.button>
 
             {/* Notify / Early Access */}
             <form onSubmit={handleNotify} className="flex gap-2 mb-8">
