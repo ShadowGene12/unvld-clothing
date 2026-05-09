@@ -14,8 +14,18 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
         <img
           src={product.images[0]}
           alt={product.name}
-          className="w-full h-full object-cover product-card-image"
+          className="w-full h-full object-cover product-card-image transition-opacity duration-500 group-hover:opacity-0"
         />
+        {/* Placeholder Video for Cinematic Hover State */}
+        <video 
+          autoPlay 
+          loop 
+          muted 
+          playsInline 
+          className="absolute inset-0 w-full h-full object-cover opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+        >
+          <source src="https://cdn.coverr.co/videos/coverr-walking-through-the-city-at-night-8133/1080p.mp4" type="video/mp4" />
+        </video>
         
         {/* Badges */}
         <div className="absolute top-3 left-3 flex flex-col gap-2">

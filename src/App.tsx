@@ -8,7 +8,7 @@ import { ReactLenis } from "lenis/react";
 import { CartProvider } from "@/context/CartContext";
 import Layout from "@/components/layout/Layout";
 import AnimatedRoutes from "@/components/layout/AnimatedRoutes";
-import GlobalAudio from "@/components/ui/GlobalAudio";
+import BrandCurtain from "@/components/layout/BrandCurtain";
 
 const queryClient = new QueryClient();
 
@@ -21,7 +21,7 @@ const App = () => (
             <Toaster />
             <Sonner />
             <BrowserRouter>
-              <GlobalAudio />
+              <BrandCurtain />
               <Layout>
                 <AnimatedRoutes />
               </Layout>

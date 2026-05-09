@@ -1,6 +1,7 @@
 import React, { useState, useMemo } from 'react';
 import { Helmet } from 'react-helmet-async';
-import { SlidersHorizontal, X, ChevronDown } from 'lucide-react';
+import { SlidersHorizontal, X, ChevronDown, Lock } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { products, collections } from '@/data/mockData';
 import ProductCard from '@/components/product/ProductCard';
 
@@ -8,6 +9,9 @@ type SortOption = 'newest' | 'bestselling' | 'price-asc' | 'price-desc';
 
 const Shop: React.FC = () => {
   const [isFiltersOpen, setIsFiltersOpen] = useState(false);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [isArchiveView, setIsArchiveView] = useState(false);
+  const [loginEmail, setLoginEmail] = useState('');
   const [selectedCollection, setSelectedCollection] = useState<string>('');
   const [selectedCategory, setSelectedCategory] = useState<string>('');
   const [selectedSize, setSelectedSize] = useState<string>('');
@@ -21,6 +25,13 @@ const Shop: React.FC = () => {
 
   const filteredProducts = useMemo(() => {
     let result = [...products];
+
+    // Filter by Archive Status
+    if (isArchiveView) {
+      result = result.filter(p => p.isArchived);
+    } else {
+      result = result.filter(p => !p.isArchived);
+    }
 
     if (selectedCollection) {
       result = result.filter(p => p.collectionSlug === selectedCollection);
@@ -53,7 +64,7 @@ const Shop: React.FC = () => {
     }
 
     return result;
-  }, [selectedCollection, selectedCategory, selectedSize, selectedColor, priceRange, sortBy]);
+  }, [selectedCollection, selectedCategory, selectedSize, selectedColor, priceRange, sortBy, isArchiveView]);
 
   const activeFiltersCount = [
     selectedCollection,
@@ -113,13 +124,62 @@ const Shop: React.FC = () => {
         />
       </Helmet>
 
+      <AnimatePresence>
+        {!isAuthenticated && (
+          <motion.div 
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0, y: -50 }}
+            transition={{ duration: 0.8, ease: [0.76, 0, 0.24, 1] }}
+            className="fixed inset-0 z-50 bg-background flex flex-col items-center justify-center p-4"
+          >
+            <div className="max-w-md w-full space-y-8 text-center">
+              <Lock className="w-8 h-8 mx-auto text-muted-foreground mb-6" />
+              <h1 className="text-3xl font-display uppercase tracking-widest">Inner Circle</h1>
+              <p className="text-muted-foreground">
+                Drop 004 is currently gated. Access is restricted for the first 24 hours. Enter your credentials to acquire.
+              </p>
+              <form 
+                onSubmit={(e) => { e.preventDefault(); setIsAuthenticated(true); }}
+                className="mt-8 space-y-4"
+              >
+                <input
+                  type="email"
+                  value={loginEmail}
+                  onChange={(e) => setLoginEmail(e.target.value)}
+                  placeholder="Email address"
+                  className="w-full px-4 py-3 bg-transparent border border-border focus:border-foreground focus:outline-none transition-colors text-center"
+                  required
+                />
+                <button type="submit" className="w-full btn-hero-primary">
+                  Enter the Void
+                </button>
+              </form>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
       <div className="container-brand py-8 md:py-12">
         {/* Header */}
-        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8">
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
           <div>
-            <h1 className="text-3xl md:text-4xl font-display">Shop All</h1>
+            <div className="flex items-center gap-6 mb-4">
+              <button 
+                onClick={() => setIsArchiveView(false)}
+                className={`text-2xl md:text-4xl font-display transition-colors ${!isArchiveView ? 'text-foreground' : 'text-muted-foreground hover:text-foreground/80'}`}
+              >
+                The Drop
+              </button>
+              <button 
+                onClick={() => setIsArchiveView(true)}
+                className={`text-2xl md:text-4xl font-display transition-colors ${isArchiveView ? 'text-foreground' : 'text-muted-foreground hover:text-foreground/80'}`}
+              >
+                The Archive
+              </button>
+            </div>
             <p className="text-muted-foreground mt-1">
-              {filteredProducts.length} product{filteredProducts.length !== 1 ? 's' : ''}
+              {filteredProducts.length} {isArchiveView ? 'archived artifact' : 'available product'}{filteredProducts.length !== 1 ? 's' : ''}
             </p>
           </div>
 
@@ -214,11 +274,17 @@ const Shop: React.FC = () => {
                 </button>
               </div>
             ) : (
-              <div className="product-grid">
+              <motion.div 
+                key={isArchiveView ? 'archive' : 'shop'}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5 }}
+                className={`product-grid ${isArchiveView ? 'grayscale opacity-75' : ''}`}
+              >
                 {filteredProducts.map(product => (
                   <ProductCard key={product.id} product={product} />
                 ))}
-              </div>
+              </motion.div>
             )}
           </div>
         </div>

@@ -48,6 +48,7 @@ export interface Product {
   };
   isNew?: boolean;
   isBestseller?: boolean;
+  isArchived?: boolean;
 }
 
 export interface DreamFundUpdate {
@@ -385,6 +386,7 @@ export const products: Product[] = [
       fit: "Relaxed drape",
       care: ["Hand wash cold", "Lay flat to dry"],
     },
+    isArchived: true,
   },
   {
     id: "10",
@@ -405,6 +407,7 @@ export const products: Product[] = [
       fit: "Boxy oversized",
       care: ["Machine wash cold inside out", "Tumble dry low"],
     },
+    isArchived: true,
   },
   {
     id: "11",

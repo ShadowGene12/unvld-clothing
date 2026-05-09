@@ -4,6 +4,7 @@ import { Menu, X, ShoppingBag, ChevronDown, Compass } from 'lucide-react';
 import { useCart } from '@/context/CartContext';
 import { collections } from '@/data/mockData';
 import { cn } from '@/lib/utils';
+import GlobalAudio from '@/components/ui/GlobalAudio';
 
 const Header: React.FC = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -122,9 +123,10 @@ const Header: React.FC = () => {
                 <Compass className="w-3.5 h-3.5" />
                 Find Your Line
               </Link>
+              <GlobalAudio />
               <button
                 onClick={() => setIsCartOpen(true)}
-                className="relative p-2 -mr-2 hover:bg-accent transition-colors"
+                className="relative p-2 -mr-2 md:mr-0 hover:bg-accent transition-colors"
                 aria-label="Open cart"
               >
                 <ShoppingBag className="w-6 h-6" />

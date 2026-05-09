@@ -1,10 +1,10 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 /* UNVLD Design System - Premium Minimal Streetwear */
-
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600&display=swap');
 
 @layer base {
   :root {
@@ -71,29 +71,29 @@
   }
 
   .dark {
-    --background: 0 0% 5%;
+    --background: 0 0% 4%; /* #0a0a0a */
     --foreground: 40 23% 96%;
 
-    --card: 0 0% 8%;
+    --card: 0 0% 6%;
     --card-foreground: 40 23% 96%;
 
-    --popover: 0 0% 8%;
+    --popover: 0 0% 6%;
     --popover-foreground: 40 23% 96%;
 
     --primary: 0 63% 45%;
     --primary-foreground: 0 0% 100%;
 
-    --secondary: 0 0% 15%;
+    --secondary: 0 0% 10%;
     --secondary-foreground: 40 23% 96%;
 
-    --muted: 0 0% 20%;
+    --muted: 0 0% 12%;
     --muted-foreground: 40 10% 70%;
 
-    --accent: 0 0% 15%;
+    --accent: 0 0% 10%;
     --accent-foreground: 40 23% 96%;
 
-    --border: 0 0% 20%;
-    --input: 0 0% 20%;
+    --border: 0 0% 12%; /* Subtle border */
+    --input: 0 0% 12%;
     --ring: 0 63% 45%;
   }
 }

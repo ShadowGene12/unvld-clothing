@@ -57,13 +57,13 @@ const GlobalAudio = () => {
   return (
     <button
       onClick={toggleMute}
-      className="fixed bottom-6 right-6 z-[100] w-12 h-12 bg-background/80 backdrop-blur border border-border rounded-full flex items-center justify-center text-foreground hover:bg-foreground hover:text-background transition-colors duration-300 group"
+      className="relative p-2 -mr-2 md:mr-0 hover:bg-accent transition-colors group flex items-center justify-center"
       aria-label={isMuted ? "Unmute ambient audio" : "Mute ambient audio"}
     >
       {isMuted ? (
-        <VolumeX className="w-4 h-4 opacity-70 group-hover:opacity-100" />
+        <VolumeX className="w-5 h-5 opacity-70 group-hover:opacity-100" />
       ) : (
-        <Volume2 className="w-4 h-4 opacity-70 group-hover:opacity-100" />
+        <Volume2 className="w-5 h-5 opacity-70 group-hover:opacity-100" />
       )}
       
       {/* Sound wave visualizer effect when playing */}

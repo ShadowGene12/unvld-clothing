@@ -220,7 +220,7 @@ const ProductDetail: React.FC = () => {
               onClick={handleAddToCart} 
               className="w-full btn-hero-primary mb-4"
             >
-              Add to Cart — ${product.price * quantity}
+              Acquire Piece — ${product.price * quantity}
             </motion.button>
 
             {/* Notify / Early Access */}
@@ -242,14 +242,38 @@ const ProductDetail: React.FC = () => {
               <AccordionItem value="fabric">
                 <AccordionTrigger className="text-sm font-medium py-4">Fabric & Fit</AccordionTrigger>
                 <AccordionContent className="text-sm text-muted-foreground pb-4">
-                  <div className="space-y-3">
-                    <div>
-                      <p className="font-medium text-foreground mb-1">Fabric</p>
-                      <p>{product.details.fabric}</p>
-                    </div>
-                    <div>
-                      <p className="font-medium text-foreground mb-1">Fit</p>
-                      <p>{product.details.fit}</p>
+                  <div className="space-y-6 mt-2">
+                    <p className="text-foreground">{product.details.fabric}</p>
+                    <p className="text-foreground">{product.details.fit}</p>
+                    
+                    <div className="space-y-4 pt-4 border-t border-white/10">
+                      <div>
+                        <div className="flex justify-between text-xs mb-1.5">
+                          <span>Structure</span>
+                          <span>Medium</span>
+                        </div>
+                        <div className="w-full h-[1px] bg-white/10 relative">
+                          <div className="absolute top-0 left-0 h-full w-[60%] bg-foreground" />
+                        </div>
+                      </div>
+                      <div>
+                        <div className="flex justify-between text-xs mb-1.5">
+                          <span>Breathability</span>
+                          <span>High</span>
+                        </div>
+                        <div className="w-full h-[1px] bg-white/10 relative">
+                          <div className="absolute top-0 left-0 h-full w-[85%] bg-foreground" />
+                        </div>
+                      </div>
+                      <div>
+                        <div className="flex justify-between text-xs mb-1.5">
+                          <span>Weight</span>
+                          <span>240GSM</span>
+                        </div>
+                        <div className="w-full h-[1px] bg-white/10 relative">
+                          <div className="absolute top-0 left-0 h-full w-[45%] bg-foreground" />
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </AccordionContent>

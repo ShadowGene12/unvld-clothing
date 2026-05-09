@@ -1,11 +1,27 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Link } from 'react-router-dom';
-import { X, Plus, Minus, Trash2 } from 'lucide-react';
+import { Link, useNavigate } from 'react-router-dom';
+import { X, Plus, Minus, Trash2, ArrowRight } from 'lucide-react';
 import { useCart } from '@/context/CartContext';
+import { getRelatedProducts } from '@/data/mockData';
 
 const CartDrawer: React.FC = () => {
   const { items, isCartOpen, setIsCartOpen, removeItem, updateQuantity, subtotal } = useCart();
+  const [isCheckoutWipe, setIsCheckoutWipe] = useState(false);
+  const navigate = useNavigate();
+
+  const handleCheckout = () => {
+    setIsCheckoutWipe(true);
+    setTimeout(() => {
+      setIsCartOpen(false);
+      setIsCheckoutWipe(false);
+      // Simulate navigate to checkout
+      navigate('/shop'); // In a real app: navigate('/checkout')
+    }, 1500);
+  };
+
+  // Get a single upsell item based on the first item in the cart
+  const upsellItem = items.length > 0 ? getRelatedProducts(items[0].product, 1)[0] : null;
 
   return (
     <AnimatePresence>
@@ -126,6 +142,29 @@ const CartDrawer: React.FC = () => {
               ))}
             </div>
           )}
+
+          {/* Upsell Section */}
+          {items.length > 0 && upsellItem && (
+            <div className="mt-8 pt-6 border-t border-border">
+              <p className="text-xs tracking-wider uppercase text-muted-foreground mb-4">To complete the silhouette...</p>
+              <Link 
+                to={`/product/${upsellItem.slug}`}
+                onClick={() => setIsCartOpen(false)}
+                className="group flex gap-4 p-3 border border-border/50 hover:border-foreground transition-colors"
+              >
+                <div className="w-16 h-20 bg-muted flex-shrink-0">
+                  <img src={upsellItem.images[0]} alt={upsellItem.name} className="w-full h-full object-cover" />
+                </div>
+                <div className="flex-1 flex flex-col justify-center">
+                  <h4 className="text-sm font-medium">{upsellItem.name}</h4>
+                  <p className="text-sm text-muted-foreground mt-1">${upsellItem.price}</p>
+                </div>
+                <div className="flex items-center justify-center px-2 text-muted-foreground group-hover:text-foreground transition-colors">
+                  <ArrowRight className="w-4 h-4" />
+                </div>
+              </Link>
+            </div>
+          )}
         </div>
 
         {/* Footer */}
@@ -138,7 +177,9 @@ const CartDrawer: React.FC = () => {
             <p className="text-xs text-muted-foreground">
               Shipping and taxes calculated at checkout.
             </p>
-            <button className="w-full btn-hero-primary">Checkout</button>
+            <button onClick={handleCheckout} className="w-full btn-hero-primary">
+              Proceed to Checkout
+            </button>
             <button
               onClick={() => setIsCartOpen(false)}
               className="w-full text-sm text-center text-muted-foreground hover:text-foreground transition-colors"
@@ -148,6 +189,27 @@ const CartDrawer: React.FC = () => {
           </div>
         )}
       </motion.div>
+      {/* Full Screen Checkout Wipe */}
+      <AnimatePresence>
+        {isCheckoutWipe && (
+          <motion.div
+            initial={{ y: '100%' }}
+            animate={{ y: 0 }}
+            exit={{ y: '-100%' }}
+            transition={{ duration: 0.8, ease: [0.76, 0, 0.24, 1] }}
+            className="fixed inset-0 z-[100] bg-background flex flex-col items-center justify-center"
+          >
+            <motion.h2 
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.4 }}
+              className="text-2xl font-display tracking-widest uppercase"
+            >
+              Preparing Your Order
+            </motion.h2>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
       )}
     </AnimatePresence>
