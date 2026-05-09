@@ -46,12 +46,11 @@ const Index: React.FC = () => {
             playsInline 
             poster={heroImage}
             className="w-full h-full object-cover scale-105"
-            style={{ filter: "brightness(0.8) contrast(1.1)" }}
+            style={{ filter: "brightness(0.5)" }}
           >
             <source src="https://cdn.coverr.co/videos/coverr-walking-through-the-city-at-night-8133/1080p.mp4" type="video/mp4" />
           </video>
-          <div className="absolute inset-0 bg-foreground/40 mix-blend-multiply" />
-          <div className="absolute inset-0 bg-gradient-to-b from-foreground/10 via-transparent to-background/90" />
+          <div className="absolute inset-0 bg-black/40" />
         </div>
         <div className="relative container-brand text-background">
           <div className="max-w-2xl stagger-children">

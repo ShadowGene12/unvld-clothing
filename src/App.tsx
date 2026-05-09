@@ -8,7 +8,6 @@ import { ReactLenis } from "lenis/react";
 import { CartProvider } from "@/context/CartContext";
 import Layout from "@/components/layout/Layout";
 import AnimatedRoutes from "@/components/layout/AnimatedRoutes";
-import CustomCursor from "@/components/ui/CustomCursor";
 import GlobalAudio from "@/components/ui/GlobalAudio";
 
 const queryClient = new QueryClient();
@@ -19,7 +18,6 @@ const App = () => (
       <CartProvider>
         <TooltipProvider>
           <ReactLenis root>
-            <CustomCursor />
             <Toaster />
             <Sonner />
             <BrowserRouter>

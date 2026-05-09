@@ -3,6 +3,7 @@ import { Helmet } from 'react-helmet-async';
 import { Heart, Users, Lightbulb, ArrowRight } from 'lucide-react';
 import { dreamFundUpdates } from '@/data/mockData';
 import { toast } from '@/hooks/use-toast';
+import heroImage from '@/assets/hero-main.jpg';
 
 const DreamFund: React.FC = () => {
   const [impactCount] = useState(23);
@@ -50,12 +51,17 @@ const DreamFund: React.FC = () => {
       </Helmet>
 
       {/* Hero */}
-      <section className="py-16 md:py-24 bg-primary text-primary-foreground">
-        <div className="container-brand text-center">
+      <section className="relative min-h-[60vh] md:min-h-[70vh] flex items-center bg-muted">
+        <div className="absolute inset-0">
+          <img src={heroImage} alt="The Dream Fund" className="w-full h-full object-cover" />
+          <div className="absolute inset-0 bg-foreground/60" />
+        </div>
+        <div className="relative container-brand text-background text-center">
+          <p className="text-xs tracking-[0.4em] uppercase mb-6 text-background/60">Community</p>
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-display mb-6">
             The Dream Fund
           </h1>
-          <p className="text-lg md:text-xl text-primary-foreground/80 max-w-2xl mx-auto">
+          <p className="text-lg md:text-xl text-background/80 max-w-2xl mx-auto">
             Every purchase you make fuels someone's dream. We dedicate 1% of all sales 
             to supporting creatives, entrepreneurs, and dreamers in their pursuit of 
             something extraordinary.
