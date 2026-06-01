@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { Product } from '@/data/mockData';
 
@@ -6,22 +6,37 @@ interface ProductCardProps {
   product: Product;
 }
 
-const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
+// ⚡ Bolt: Memoized ProductCard to prevent unnecessary re-renders in large lists
+const ProductCard: React.FC<ProductCardProps> = React.memo(({ product }) => {
+  // ⚡ Bolt: Use ref to control video playback only on hover, saving significant CPU and bandwidth
+  const videoRef = useRef<HTMLVideoElement>(null);
+
   return (
-    <Link to={`/product/${product.slug}`} className="group product-card block">
+    <Link
+      to={`/product/${product.slug}`}
+      className="group product-card block"
+      onMouseEnter={() => videoRef.current?.play().catch(() => {})}
+      onMouseLeave={() => {
+        if (videoRef.current) {
+          videoRef.current.pause();
+        }
+      }}
+    >
       {/* Image Container */}
       <div className="relative aspect-[3/4] bg-muted overflow-hidden mb-4">
         <img
           src={product.images[0]}
           alt={product.name}
+          loading="lazy"
           className="w-full h-full object-cover product-card-image transition-opacity duration-500 group-hover:opacity-0"
         />
         {/* Placeholder Video for Cinematic Hover State */}
         <video 
-          autoPlay 
+          ref={videoRef}
           loop 
           muted 
           playsInline 
+          preload="none"
           className="absolute inset-0 w-full h-full object-cover opacity-0 group-hover:opacity-100 transition-opacity duration-500"
         >
           <source src="https://cdn.coverr.co/videos/coverr-walking-through-the-city-at-night-8133/1080p.mp4" type="video/mp4" />
@@ -91,6 +106,8 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
       </div>
     </Link>
   );
-};
+});
+
+ProductCard.displayName = 'ProductCard';
 
 export default ProductCard;
