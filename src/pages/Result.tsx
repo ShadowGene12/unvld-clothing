@@ -7,7 +7,7 @@ import { toast } from "sonner";
 
 const Result = () => {
   const navigate = useNavigate();
-  const [world, setWorld] = useState<any>(null);
+  const [world, setWorld] = useState<typeof worlds[keyof typeof worlds] | null>(null);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [formData, setFormData] = useState({
     name: "",
