@@ -28,7 +28,7 @@ const Result = () => {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     // Here we would normally save to Supabase
-    console.log("Saving to DB:", { world: world.id, ...formData });
+    // TODO: Send data to backend securely
     setIsSubmitted(true);
     toast.success("Welcome to the line.");
   };

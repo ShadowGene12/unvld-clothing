@@ -24,7 +24,7 @@ const EarlyAccessForm: React.FC = () => {
   const onSubmit = async (data: FormData) => {
     // Mock API call
     await new Promise(resolve => setTimeout(resolve, 1500));
-    console.log('Submitting:', data);
+    // TODO: Send data to backend securely
     setIsSubmitted(true);
   };
 

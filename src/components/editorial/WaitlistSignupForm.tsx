@@ -59,15 +59,7 @@ const WaitlistSignupForm = ({
 
   const onSubmit = (data: FormValues) => {
     // In production, this would POST to your backend
-    console.log("Waitlist signup:", {
-      ...data,
-      worldId,
-      worldName,
-      pieceId,
-      pieceName,
-      source,
-      timestamp: new Date().toISOString(),
-    });
+    // TODO: Send data to backend securely
     setIsSubmitted(true);
   };
 
