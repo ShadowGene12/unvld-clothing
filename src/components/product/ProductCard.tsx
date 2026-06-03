@@ -2,12 +2,52 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { Product } from '@/data/mockData';
 
+import { useState } from 'react';
+import { useCart } from '@/context/CartContext';
+import { toast } from '@/hooks/use-toast';
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogDescription,
+} from '@/components/ui/dialog';
+
+
 interface ProductCardProps {
   product: Product;
 }
 
 const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
+  const [isQuickAddOpen, setIsQuickAddOpen] = useState(false);
+  const [selectedSize, setSelectedSize] = useState('');
+  const [selectedColor, setSelectedColor] = useState('');
+  const { addItem, setIsCartOpen } = useCart();
+
+  const handleAddToCart = (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+
+    if (!selectedSize) {
+      toast({ title: 'Select a size', description: 'Please choose a size before adding to cart.', variant: 'destructive' });
+      return;
+    }
+    if (!selectedColor) {
+      toast({ title: 'Select a color', description: 'Please choose a color before adding to cart.', variant: 'destructive' });
+      return;
+    }
+
+    addItem(product, selectedSize, selectedColor);
+    setIsCartOpen(true);
+    setIsQuickAddOpen(false);
+
+    // Reset selections
+    setSelectedSize('');
+    setSelectedColor('');
+  };
+
   return (
+    <>
     <Link to={`/product/${product.slug}`} className="group product-card block">
       {/* Image Container */}
       <div className="relative aspect-[3/4] bg-muted overflow-hidden mb-4">
@@ -46,7 +86,8 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
           <button
             onClick={(e) => {
               e.preventDefault();
-              // TODO: Quick add modal
+              e.stopPropagation();
+              setIsQuickAddOpen(true);
             }}
             className="w-full py-3 text-xs font-medium tracking-wider uppercase bg-background/95 text-foreground hover:bg-foreground hover:text-background transition-colors"
           >
@@ -90,6 +131,70 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
         </div>
       </div>
     </Link>
+
+      <Dialog open={isQuickAddOpen} onOpenChange={setIsQuickAddOpen}>
+        <DialogContent onClick={(e) => e.stopPropagation()} className="sm:max-w-[425px]">
+          <DialogHeader>
+            <DialogTitle>{product.name}</DialogTitle>
+            <DialogDescription>
+              ${product.price}
+            </DialogDescription>
+          </DialogHeader>
+
+          <div className="py-4 space-y-6">
+            {/* Color Selection */}
+            <div>
+              <p className="text-sm font-medium mb-3">Color: {selectedColor || 'Select'}</p>
+              <div className="flex gap-2">
+                {product.colors.map(color => (
+                  <button
+                    key={color.name}
+                    onClick={(e) => {
+                      e.preventDefault();
+                      e.stopPropagation();
+                      setSelectedColor(color.name);
+                    }}
+                    className={`w-8 h-8 rounded-full border-2 transition-all ${selectedColor === color.name ? 'border-foreground scale-110' : 'border-border hover:border-muted-foreground'}`}
+                    style={{ backgroundColor: color.hex }}
+                    title={color.name}
+                    aria-label={color.name}
+                  />
+                ))}
+              </div>
+            </div>
+
+            {/* Size Selection */}
+            <div>
+              <div className="flex items-center justify-between mb-3">
+                <p className="text-sm font-medium">Size: {selectedSize || 'Select'}</p>
+              </div>
+              <div className="flex flex-wrap gap-2">
+                {product.sizes?.map(size => (
+                  <button
+                    key={size}
+                    onClick={(e) => {
+                      e.preventDefault();
+                      e.stopPropagation();
+                      setSelectedSize(size);
+                    }}
+                    className={`min-w-[48px] px-3 py-1.5 border text-sm font-medium transition-colors ${selectedSize === size ? 'border-foreground bg-foreground text-background' : 'border-border hover:border-foreground'}`}
+                  >
+                    {size}
+                  </button>
+                ))}
+              </div>
+            </div>
+          </div>
+
+          <button
+            onClick={handleAddToCart}
+            className="w-full py-3 text-sm font-medium tracking-wider uppercase bg-foreground text-background hover:bg-foreground/90 transition-colors"
+          >
+            Add to Cart
+          </button>
+        </DialogContent>
+      </Dialog>
+    </>
   );
 };
 
