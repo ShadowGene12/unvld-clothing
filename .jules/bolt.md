@@ -1,0 +1,3 @@
+## 2024-05-24 - Unnecessary re-computation of filter arrays in React components
+**Learning:** In the `Shop` component, creating arrays with operations like `Set` and `map` or `flatMap` directly in the render body leads to them being re-computed on every render. This was happening even when irrelevant state changed, taking a toll on performance because these calculations are quite heavy, particularly for potentially large data such as `products`.
+**Action:** When working with imported static data (`products`) in a React component, use `useMemo` with an empty dependency array (or move the calculations entirely out of the component if no internal component logic is needed) to calculate derived constants only once.
