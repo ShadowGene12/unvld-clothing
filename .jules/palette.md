@@ -1,0 +1,3 @@
+## 2024-06-04 - Accessibility attributes missing in dropdown menus
+**Learning:** Found an accessibility issue pattern specific to this app's components: Dropdown buttons triggering menus, such as the "Worlds" navigation item, were missing essential `aria-expanded` and `aria-controls` attributes, preventing screen readers from understanding the state of the component.
+**Action:** Always add `aria-expanded` (linked to the open state variable) and `aria-controls` (pointing to the menu container `id`) when building or modifying custom dropdown components.
