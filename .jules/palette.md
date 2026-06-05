@@ -1,0 +1,3 @@
+## 2024-03-21 - Custom Dropdown Menu Accessibility Pattern
+**Learning:** A recurring pattern in this app is the creation of custom dropdown components using standard HTML elements (`div`, `button`) without proper ARIA attributes to communicate state to screen readers. Specifically, `aria-expanded` and `aria-controls` are frequently missing, making it impossible for screen reader users to know if a menu is open or which element controls it.
+**Action:** When working on custom interactive menus or dropdowns, always ensure that `aria-expanded` (linked to the open state variable) and `aria-controls` (pointing to the menu container `id`) are present.
