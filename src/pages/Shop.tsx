@@ -19,33 +19,28 @@ const Shop: React.FC = () => {
   const [priceRange, setPriceRange] = useState<[number, number]>([0, 500]);
   const [sortBy, setSortBy] = useState<SortOption>('newest');
 
-  const categories = [...new Set(products.map(p => p.category))];
-  const sizes = [...new Set(products.flatMap(p => p.sizes))];
-  const colors = [...new Set(products.flatMap(p => p.colors.map(c => c.name)))];
+  const { categories, sizes, colors } = useMemo(() => {
+    return {
+      categories: [...new Set(products.map(p => p.category))],
+      sizes: [...new Set(products.flatMap(p => p.sizes))],
+      colors: [...new Set(products.flatMap(p => p.colors.map(c => c.name)))]
+    };
+  }, []); // Products array is static from mockData
 
   const filteredProducts = useMemo(() => {
-    let result = [...products];
+    // ⚡ Bolt: Single pass filter to avoid multiple array allocations and O(k*N) complexity
+    let result = products.filter(p => {
+      // Filter by Archive Status
+      if (isArchiveView ? !p.isArchived : p.isArchived) return false;
 
-    // Filter by Archive Status
-    if (isArchiveView) {
-      result = result.filter(p => p.isArchived);
-    } else {
-      result = result.filter(p => !p.isArchived);
-    }
+      if (selectedCollection && p.collectionSlug !== selectedCollection) return false;
+      if (selectedCategory && p.category !== selectedCategory) return false;
+      if (selectedSize && !p.sizes.includes(selectedSize)) return false;
+      if (selectedColor && !p.colors.some(c => c.name === selectedColor)) return false;
+      if (p.price < priceRange[0] || p.price > priceRange[1]) return false;
 
-    if (selectedCollection) {
-      result = result.filter(p => p.collectionSlug === selectedCollection);
-    }
-    if (selectedCategory) {
-      result = result.filter(p => p.category === selectedCategory);
-    }
-    if (selectedSize) {
-      result = result.filter(p => p.sizes.includes(selectedSize));
-    }
-    if (selectedColor) {
-      result = result.filter(p => p.colors.some(c => c.name === selectedColor));
-    }
-    result = result.filter(p => p.price >= priceRange[0] && p.price <= priceRange[1]);
+      return true;
+    });
 
     // Sort
     switch (sortBy) {
