@@ -1,0 +1,3 @@
+## 2024-03-20 - Custom Dropdown Screen Reader Compatibility
+**Learning:** Discovered a critical accessibility issue pattern where custom React dropdown components (like the "Worlds" menu) lack semantic connection between the toggle button and the expanding content. Screen readers cannot infer that a button controls a specific menu or its current state simply by visual proximity or DOM rendering state.
+**Action:** Always include `aria-expanded` (linked to the open state variable) and `aria-controls` (pointing to the menu container `id`) on custom dropdown toggles to ensure proper accessibility for screen readers.
