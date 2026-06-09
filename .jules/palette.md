@@ -1,0 +1,3 @@
+## 2024-05-18 - Dropdown Menu Accessibility Pattern
+**Learning:** React state-driven dropdown menus (like the 'Worlds' navigation) frequently lack intrinsic relationship bindings (`aria-expanded` and `aria-controls`) between the trigger button and the menu container, rendering them confusing for screen reader users as they cannot perceive the connection or state.
+**Action:** When creating or reviewing custom dropdowns or popovers, always verify that the trigger element asserts `aria-expanded` reflecting the boolean open state, and use `aria-controls` referencing the unique `id` of the menu container.
