@@ -51,7 +51,11 @@ const Footer: React.FC = () => {
               First access to new drops, exclusive content, and stories from the community.
             </p>
             <form onSubmit={handleNewsletterSubmit} className="flex gap-2">
+              <label htmlFor="newsletter-email" className="sr-only">
+                Email address for newsletter
+              </label>
               <input
+                id="newsletter-email"
                 type="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
@@ -61,7 +65,7 @@ const Footer: React.FC = () => {
               />
               <button
                 type="submit"
-                className="px-6 py-3 bg-primary text-primary-foreground font-medium tracking-wider uppercase text-sm hover:bg-primary/90 transition-colors"
+                className="px-6 py-3 bg-primary text-primary-foreground font-medium tracking-wider uppercase text-sm hover:bg-primary/90 transition-colors focus-visible:ring-2 focus-visible:ring-background focus:outline-none focus-visible:ring-offset-2 focus-visible:ring-offset-foreground"
               >
                 Subscribe
               </button>

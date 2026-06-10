@@ -1,0 +1,3 @@
+## 2025-02-28 - Missing Form Accessibility in Minimalist Designs
+**Learning:** In minimalist designs (like `ProductDetail.tsx` and `Footer.tsx`), inputs and icon-only buttons are often designed without visible labels to maintain a clean aesthetic, but this frequently leads to missing accessibility labels (`aria-label`, hidden `<label>`, etc.) and focus states for keyboard users.
+**Action:** Always verify that every form input and icon-only button, regardless of aesthetic constraints, has an associated `sr-only` label, `aria-label`, and `focus-visible` styles to ensure it remains accessible to screen readers and keyboard users.
