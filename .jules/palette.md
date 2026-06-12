@@ -1,0 +1,3 @@
+## 2024-06-12 - Custom Dropdown Accessibility
+**Learning:** Custom dropdown menus must be explicitly linked to their corresponding elements using `aria-expanded` and `aria-controls` for proper screen reader support. The `aria-controls` attribute must point to the unique ID of the dropdown container, and `aria-expanded` should map to the boolean state tracking the open/closed status.
+**Action:** Always verify that components toggling the visibility of another element have `aria-expanded` tied to the state and `aria-controls` pointing to a distinct `id` on the target container.
