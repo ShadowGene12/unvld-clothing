@@ -7,6 +7,12 @@ import ProductCard from '@/components/product/ProductCard';
 
 type SortOption = 'newest' | 'bestselling' | 'price-asc' | 'price-desc';
 
+// OPTIMIZATION: Extracted expensive static data computations outside of the component body
+// This prevents O(N) array mapping and Set creation on every render cycle.
+const staticCategories = [...new Set(products.map(p => p.category))];
+const staticSizes = [...new Set(products.flatMap(p => p.sizes))];
+const staticColors = [...new Set(products.flatMap(p => p.colors.map(c => c.name)))];
+
 const Shop: React.FC = () => {
   const [isFiltersOpen, setIsFiltersOpen] = useState(false);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -18,10 +24,6 @@ const Shop: React.FC = () => {
   const [selectedColor, setSelectedColor] = useState<string>('');
   const [priceRange, setPriceRange] = useState<[number, number]>([0, 500]);
   const [sortBy, setSortBy] = useState<SortOption>('newest');
-
-  const categories = [...new Set(products.map(p => p.category))];
-  const sizes = [...new Set(products.flatMap(p => p.sizes))];
-  const colors = [...new Set(products.flatMap(p => p.colors.map(c => c.name)))];
 
   const filteredProducts = useMemo(() => {
     let result = [...products];
@@ -241,21 +243,21 @@ const Shop: React.FC = () => {
               <FilterSelect
                 label="Category"
                 value={selectedCategory}
-                options={categories.map(c => ({ value: c, label: c.charAt(0).toUpperCase() + c.slice(1) }))}
+                options={staticCategories.map(c => ({ value: c, label: c.charAt(0).toUpperCase() + c.slice(1) }))}
                 onChange={setSelectedCategory}
               />
 
               <FilterSelect
                 label="Size"
                 value={selectedSize}
-                options={sizes.map(s => ({ value: s, label: s }))}
+                options={staticSizes.map(s => ({ value: s, label: s }))}
                 onChange={setSelectedSize}
               />
 
               <FilterSelect
                 label="Color"
                 value={selectedColor}
-                options={colors.map(c => ({ value: c, label: c }))}
+                options={staticColors.map(c => ({ value: c, label: c }))}
                 onChange={setSelectedColor}
               />
             </div>
@@ -319,21 +321,21 @@ const Shop: React.FC = () => {
               <FilterSelect
                 label="Category"
                 value={selectedCategory}
-                options={categories.map(c => ({ value: c, label: c.charAt(0).toUpperCase() + c.slice(1) }))}
+                options={staticCategories.map(c => ({ value: c, label: c.charAt(0).toUpperCase() + c.slice(1) }))}
                 onChange={setSelectedCategory}
               />
 
               <FilterSelect
                 label="Size"
                 value={selectedSize}
-                options={sizes.map(s => ({ value: s, label: s }))}
+                options={staticSizes.map(s => ({ value: s, label: s }))}
                 onChange={setSelectedSize}
               />
 
               <FilterSelect
                 label="Color"
                 value={selectedColor}
-                options={colors.map(c => ({ value: c, label: c }))}
+                options={staticColors.map(c => ({ value: c, label: c }))}
                 onChange={setSelectedColor}
               />
             </div>
