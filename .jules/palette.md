@@ -1,0 +1,3 @@
+## 2024-06-14 - Custom Dropdown Accessibility Pattern
+**Learning:** In the UNVLD custom dropdown components (like the "Worlds" navigation), relying solely on hover states or React state (`isWorldsOpen`) without semantic HTML is inaccessible. Screen readers have no way of knowing a dropdown exists or its current state.
+**Action:** Always pair interactive disclosure widgets with `aria-expanded` (linked to the open state variable) and `aria-controls` (pointing to the menu container `id`). This pattern must be applied consistently across both desktop and mobile variants of custom dropdowns in this repository.
