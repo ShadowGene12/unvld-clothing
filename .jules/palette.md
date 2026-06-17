@@ -1,0 +1,3 @@
+## 2024-06-17 - Add ARIA Attributes to Custom Dropdowns
+**Learning:** Custom dropdown menus in this application lack basic accessibility attributes by default. To make them accessible to screen readers, elements controlling the dropdowns must include `aria-expanded` reflecting the open/closed state, and `aria-controls` pointing to the `id` of the menu container.
+**Action:** When creating or modifying interactive custom dropdown components in the future, ensure `aria-expanded` and `aria-controls` are appropriately set, along with corresponding `id`s on their target containers.
