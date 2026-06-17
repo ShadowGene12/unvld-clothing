@@ -1,0 +1,3 @@
+## 2024-06-17 - Prevent O(N) Array Operations inside React Component Body
+**Learning:** Found that static mock data imports (`products`) were having expensive array mapping and deduping logic (`.map()`, `.flatMap()`, `new Set()`) executed directly inside the component body. This causes unnecessary O(N) recalculations on every single render (e.g., when a user types in a form or clicks a filter).
+**Action:** Always inspect functional component bodies for expensive derived data operations on static sources. Move these static calculations to module scope outside of the component so they are executed only once upon module load.
