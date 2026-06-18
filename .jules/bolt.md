@@ -1,0 +1,3 @@
+## 2024-03-24 - Prevent O(N) Array Recalculations in React Components
+**Learning:** Found a common pattern where expensive static array operations (like `map`, `flatMap`, and creating `Set`s on static `products` array) were inside the `Shop` React component body. This causes unnecessary O(N) computations on every single component re-render, blocking the main thread and slowing down UI updates.
+**Action:** Move static array computations to the module level, outside the React component body, when dealing with constant/mock data to compute them only once when the module loads, significantly reducing re-render cost.
