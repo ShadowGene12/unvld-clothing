@@ -12,10 +12,15 @@ const Quiz = () => {
   useEffect(() => {
     const savedState = localStorage.getItem('unvld_quiz_state');
     if (savedState) {
-      const { step, currentScores, currentAnswers } = JSON.parse(savedState);
-      setCurrentStep(step);
-      setScores(currentScores);
-      setAnswers(currentAnswers);
+      try {
+        const { step, currentScores, currentAnswers } = JSON.parse(savedState);
+        setCurrentStep(step);
+        setScores(currentScores);
+        setAnswers(currentAnswers);
+      } catch (error) {
+        console.error('Failed to parse quiz state:', error);
+        localStorage.removeItem('unvld_quiz_state');
+      }
     }
   }, []);
 
