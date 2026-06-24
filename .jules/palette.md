@@ -1,0 +1,3 @@
+## 2024-06-24 - Dropdown Navigation Accessibility Pattern
+**Learning:** Custom dropdown components built without Radix/Headless UI in this codebase (like the Worlds menu in Header.tsx) often lack semantic connection between the toggle button and the menu container. This makes it difficult for screen readers to understand the expanded/collapsed state and what content the button controls.
+**Action:** When working with custom interactive navigation components, always explicitly connect the toggle button (`aria-expanded`, `aria-controls`) to the menu container (`id`) to ensure state and relationship are communicated clearly to assistive technologies.
