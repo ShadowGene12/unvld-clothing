@@ -1,0 +1,3 @@
+## 2023-10-27 - Hoisted array static operations outside component body
+**Learning:** Found an optimization opportunity where array derivations (`map`, `flatMap`, `Set`) for filter dropdowns were executing inside the render body. Even when using static module-level mock data, recomputing `O(N)` variables inside `useMemo` is not needed since the original data is inherently static and not a component prop. The re-computation scales linearly with mock data size.
+**Action:** Always verify if complex array derivations derived entirely from constant/static module data can be hoisted out of the component function to guarantee they only run once upon module parsing.
