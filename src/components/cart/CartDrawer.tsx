@@ -26,7 +26,7 @@ const CartDrawer: React.FC = () => {
   return (
     <AnimatePresence>
       {isCartOpen && (
-        <div className="fixed inset-0 z-[70]">
+        <div id="cart-drawer" className="fixed inset-0 z-[70]">
           {/* Backdrop */}
           <motion.div
             initial={{ opacity: 0 }}
