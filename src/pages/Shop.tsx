@@ -7,6 +7,12 @@ import ProductCard from '@/components/product/ProductCard';
 
 type SortOption = 'newest' | 'bestselling' | 'price-asc' | 'price-desc';
 
+// Performance Optimization: Hoisted static mock data calculations outside the component
+// to prevent expensive O(N) array operations (map, flatMap, Set) on every re-render.
+const STATIC_CATEGORIES = [...new Set(products.map(p => p.category))];
+const STATIC_SIZES = [...new Set(products.flatMap(p => p.sizes))];
+const STATIC_COLORS = [...new Set(products.flatMap(p => p.colors.map(c => c.name)))];
+
 const Shop: React.FC = () => {
   const [isFiltersOpen, setIsFiltersOpen] = useState(false);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -19,9 +25,9 @@ const Shop: React.FC = () => {
   const [priceRange, setPriceRange] = useState<[number, number]>([0, 500]);
   const [sortBy, setSortBy] = useState<SortOption>('newest');
 
-  const categories = [...new Set(products.map(p => p.category))];
-  const sizes = [...new Set(products.flatMap(p => p.sizes))];
-  const colors = [...new Set(products.flatMap(p => p.colors.map(c => c.name)))];
+  const categories = STATIC_CATEGORIES;
+  const sizes = STATIC_SIZES;
+  const colors = STATIC_COLORS;
 
   const filteredProducts = useMemo(() => {
     let result = [...products];
