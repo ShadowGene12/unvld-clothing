@@ -68,12 +68,14 @@ const Header: React.FC = () => {
                     'flex items-center gap-1 text-sm tracking-wide py-1',
                     location.pathname.includes('/worlds') && 'font-medium'
                   )}
+                  aria-expanded={isWorldsOpen}
+                  aria-controls="desktop-worlds-dropdown"
                 >
                   Worlds
                   <ChevronDown className={cn('w-4 h-4 transition-transform duration-200', isWorldsOpen && 'rotate-180')} />
                 </button>
                 {isWorldsOpen && (
-                  <div className="absolute top-full left-0 pt-2 animate-fade-in">
+                  <div className="absolute top-full left-0 pt-2 animate-fade-in" id="desktop-worlds-dropdown">
                     <div className="bg-background border border-border shadow-lg min-w-[200px]">
                       <Link to="/worlds" className="block px-4 py-3 text-sm hover:bg-accent transition-colors border-b border-border">
                         All Worlds
@@ -156,12 +158,17 @@ const Header: React.FC = () => {
               <Link to="/" className="block py-3 text-lg border-b border-border">Home</Link>
 
               <div className="py-3 border-b border-border">
-                <button onClick={() => setIsWorldsOpen(!isWorldsOpen)} className="flex items-center justify-between w-full text-lg">
+                <button
+                  onClick={() => setIsWorldsOpen(!isWorldsOpen)}
+                  className="flex items-center justify-between w-full text-lg"
+                  aria-expanded={isWorldsOpen}
+                  aria-controls="mobile-worlds-dropdown"
+                >
                   Worlds
                   <ChevronDown className={cn('w-5 h-5 transition-transform duration-200', isWorldsOpen && 'rotate-180')} />
                 </button>
                 {isWorldsOpen && (
-                  <div className="mt-2 pl-4 space-y-2">
+                  <div className="mt-2 pl-4 space-y-2" id="mobile-worlds-dropdown">
                     <Link to="/worlds" className="block py-2 text-muted-foreground">All Worlds</Link>
                     {collections.map(c => (
                       <Link key={c.slug} to={`/worlds/${c.slug}`} className="block py-2 text-muted-foreground">
