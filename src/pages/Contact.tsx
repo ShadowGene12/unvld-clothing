@@ -10,14 +10,21 @@ const Contact: React.FC = () => {
     subject: '',
     message: '',
   });
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    toast({
-      title: "Message Sent",
-      description: "We've received your message and will get back to you soon.",
-    });
-    setFormData({ name: '', email: '', subject: '', message: '' });
+    setIsSubmitting(true);
+
+    // Simulate network delay
+    setTimeout(() => {
+      toast({
+        title: "Message Sent",
+        description: "We've received your message and will get back to you soon.",
+      });
+      setFormData({ name: '', email: '', subject: '', message: '' });
+      setIsSubmitting(false);
+    }, 1500);
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
@@ -104,37 +111,43 @@ const Contact: React.FC = () => {
           <div>
             <form onSubmit={handleSubmit} className="space-y-6">
               <div>
-                <label className="block text-sm font-medium mb-2">Name *</label>
+                <label htmlFor="name" className="block text-sm font-medium mb-2">Name *</label>
                 <input
+                  id="name"
                   type="text"
                   name="name"
                   value={formData.name}
                   onChange={handleChange}
                   required
-                  className="w-full px-4 py-3 border border-border bg-background focus:outline-none focus:border-foreground transition-colors"
+                  disabled={isSubmitting}
+                  className="w-full px-4 py-3 border border-border bg-background focus:outline-none focus:border-foreground transition-colors disabled:opacity-50"
                 />
               </div>
 
               <div>
-                <label className="block text-sm font-medium mb-2">Email *</label>
+                <label htmlFor="email" className="block text-sm font-medium mb-2">Email *</label>
                 <input
+                  id="email"
                   type="email"
                   name="email"
                   value={formData.email}
                   onChange={handleChange}
                   required
-                  className="w-full px-4 py-3 border border-border bg-background focus:outline-none focus:border-foreground transition-colors"
+                  disabled={isSubmitting}
+                  className="w-full px-4 py-3 border border-border bg-background focus:outline-none focus:border-foreground transition-colors disabled:opacity-50"
                 />
               </div>
 
               <div>
-                <label className="block text-sm font-medium mb-2">Subject *</label>
+                <label htmlFor="subject" className="block text-sm font-medium mb-2">Subject *</label>
                 <select
+                  id="subject"
                   name="subject"
                   value={formData.subject}
                   onChange={handleChange}
                   required
-                  className="w-full px-4 py-3 border border-border bg-background focus:outline-none focus:border-foreground transition-colors appearance-none"
+                  disabled={isSubmitting}
+                  className="w-full px-4 py-3 border border-border bg-background focus:outline-none focus:border-foreground transition-colors appearance-none disabled:opacity-50"
                 >
                   <option value="">Select a topic</option>
                   <option value="order">Order Question</option>
@@ -147,19 +160,21 @@ const Contact: React.FC = () => {
               </div>
 
               <div>
-                <label className="block text-sm font-medium mb-2">Message *</label>
+                <label htmlFor="message" className="block text-sm font-medium mb-2">Message *</label>
                 <textarea
+                  id="message"
                   name="message"
                   value={formData.message}
                   onChange={handleChange}
                   required
+                  disabled={isSubmitting}
                   rows={5}
-                  className="w-full px-4 py-3 border border-border bg-background focus:outline-none focus:border-foreground transition-colors resize-none"
+                  className="w-full px-4 py-3 border border-border bg-background focus:outline-none focus:border-foreground transition-colors resize-none disabled:opacity-50"
                 />
               </div>
 
-              <button type="submit" className="w-full btn-hero-primary">
-                Send Message
+              <button type="submit" disabled={isSubmitting} className="w-full btn-hero-primary disabled:opacity-50 disabled:cursor-not-allowed">
+                {isSubmitting ? 'Sending...' : 'Send Message'}
               </button>
             </form>
           </div>
