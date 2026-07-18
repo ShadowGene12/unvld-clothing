@@ -1,0 +1,3 @@
+## 2024-07-18 - Accessibility Attributes on Custom Dropdowns
+**Learning:** Custom dropdown components must include 'aria-expanded' (linked to the open state variable) and 'aria-controls' (pointing to the menu container 'id') to ensure proper accessibility for screen readers.
+**Action:** Always verify that custom `<button>` elements used as dropdown toggles have proper ARIA attributes to describe their state and relationship to the content they control.
