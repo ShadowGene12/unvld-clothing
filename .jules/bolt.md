@@ -1,0 +1,3 @@
+## 2024-07-20 - Extract static array computations out of render cycle
+**Learning:** In the UNVLD application's e-commerce shop view, filter options (categories, sizes, colors) were being computed directly inside the React component via expensive mapping, flattening, and Set deduplication operations (`[...new Set(products.flatMap(...))]`). Because `products` is static mock data, this caused O(N) recalculations on every single render, wasting CPU cycles and potentially causing UI jank when opening/closing the filter sidebar or scrolling.
+**Action:** Always extract complex, static array derivations (maps, filters, sets) to the module scope outside the React component body to guarantee they run only once at load time, not every render.
