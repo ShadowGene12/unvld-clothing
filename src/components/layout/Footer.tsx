@@ -51,7 +51,9 @@ const Footer: React.FC = () => {
               First access to new drops, exclusive content, and stories from the community.
             </p>
             <form onSubmit={handleNewsletterSubmit} className="flex gap-2">
+              <label htmlFor="newsletter-email" className="sr-only">Newsletter Email</label>
               <input
+                id="newsletter-email"
                 type="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
