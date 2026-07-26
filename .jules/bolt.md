@@ -1,0 +1,3 @@
+## 2024-07-26 - Prevented mass auto-play video buffering on load
+**Learning:** In a product grid with many items (28 here), using `autoPlay` and lacking `preload="none"` on hidden `<video>` tags causes massive immediate bandwidth and CPU spikes as all videos attempt to load and buffer simultaneously upon page load, even if they are only revealed on hover via CSS.
+**Action:** Always prefer manual JavaScript-driven `play()` triggered by hover events (e.g., `onMouseEnter`) with a `.catch()` for play promises, combined with `preload="none"`, rather than relying on CSS opacity and HTML `autoPlay` for hover-based video effects.

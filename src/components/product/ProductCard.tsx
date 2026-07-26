@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { Product } from '@/data/mockData';
 
@@ -7,18 +7,46 @@ interface ProductCardProps {
 }
 
 const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
+  const videoRef = useRef<HTMLVideoElement>(null);
+
+  const handleMouseEnter = () => {
+    if (videoRef.current) {
+      videoRef.current.play().catch(() => {
+        // Ignore play errors (e.g. if the user hasn't interacted with the document yet)
+      });
+    }
+  };
+
+  const handleMouseLeave = () => {
+    if (videoRef.current) {
+      videoRef.current.pause();
+      videoRef.current.currentTime = 0;
+    }
+  };
+
   return (
-    <Link to={`/product/${product.slug}`} className="group product-card block">
+    <Link
+      to={`/product/${product.slug}`}
+      className="group product-card block"
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
+    >
       {/* Image Container */}
       <div className="relative aspect-[3/4] bg-muted overflow-hidden mb-4">
         <img
           src={product.images[0]}
           alt={product.name}
+          loading="lazy"
           className="w-full h-full object-cover product-card-image transition-opacity duration-500 group-hover:opacity-0"
         />
-        {/* Placeholder Video for Cinematic Hover State */}
+        {/*
+          Performance Optimization: Removed autoPlay and added preload="none" to prevent
+          downloading and playing 1080p videos simultaneously on page load.
+          Video is now triggered manually via hover events to save bandwidth and CPU.
+        */}
         <video 
-          autoPlay 
+          ref={videoRef}
+          preload="none"
           loop 
           muted 
           playsInline 
