@@ -19,9 +19,13 @@ const Shop: React.FC = () => {
   const [priceRange, setPriceRange] = useState<[number, number]>([0, 500]);
   const [sortBy, setSortBy] = useState<SortOption>('newest');
 
-  const categories = [...new Set(products.map(p => p.category))];
-  const sizes = [...new Set(products.flatMap(p => p.sizes))];
-  const colors = [...new Set(products.flatMap(p => p.colors.map(c => c.name)))];
+  // Performance optimization: Memoize the extraction of unique categories, sizes, and colors
+  // to prevent O(N) array mapping and flatMapping on every render (e.g., when opening filters).
+  const { categories, sizes, colors } = useMemo(() => ({
+    categories: [...new Set(products.map(p => p.category))],
+    sizes: [...new Set(products.flatMap(p => p.sizes))],
+    colors: [...new Set(products.flatMap(p => p.colors.map(c => c.name)))]
+  }), []); // Empty dependency array since products is statically imported
 
   const filteredProducts = useMemo(() => {
     let result = [...products];
