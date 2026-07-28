@@ -1,0 +1,3 @@
+## 2024-07-28 - Missing Form Labels and ARIA Labels
+**Learning:** Found a common accessibility issue pattern across this app's components where email capture forms (like in ProductDetail and Footer) use placeholder text instead of proper `<label>` elements, and icon-only buttons lack `aria-label` attributes. This makes forms difficult to use for screen reader users and those navigating via keyboard.
+**Action:** When adding or reviewing forms and inputs in this codebase, always ensure visually hidden labels (`sr-only`) or visible labels are used and properly linked with `htmlFor` and `id`. Additionally, ensure all icon-only buttons include descriptive `aria-label`s.
