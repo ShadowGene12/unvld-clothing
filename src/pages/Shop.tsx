@@ -143,7 +143,9 @@ const Shop: React.FC = () => {
                 onSubmit={(e) => { e.preventDefault(); setIsAuthenticated(true); }}
                 className="mt-8 space-y-4"
               >
+                <label htmlFor="voidEmail" className="sr-only">Email address</label>
                 <input
+                  id="voidEmail"
                   type="email"
                   value={loginEmail}
                   onChange={(e) => setLoginEmail(e.target.value)}
