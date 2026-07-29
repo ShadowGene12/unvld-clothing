@@ -1,0 +1,3 @@
+## 2024-05-18 - Unnecessary re-renders on filter changes
+**Learning:** The `ProductCard` component, rendered frequently in lists (like in `Shop.tsx` and `Index.tsx`), lacked memoization, causing all instances to re-render when a parent's state (like filter selection in `Shop.tsx`) updated, despite receiving the same props. Additionally, off-screen product images were eager loaded, consuming bandwidth and memory unnecessarily.
+**Action:** Wrapped `ProductCard` with `React.memo` to prevent re-renders when props haven't changed, and added `loading="lazy"` to its primary `<img>` tag to defer loading off-screen imagery. Always apply `memo` to frequently listed display components and `lazy` to their images to optimize list rendering performance.

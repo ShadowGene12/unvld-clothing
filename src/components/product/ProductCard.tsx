@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import { Link } from 'react-router-dom';
 import { Product } from '@/data/mockData';
 
@@ -6,7 +6,8 @@ interface ProductCardProps {
   product: Product;
 }
 
-const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
+// ⚡ Bolt Performance Optimization: Wrapped with memo to prevent unnecessary re-renders in list views
+const ProductCard: React.FC<ProductCardProps> = memo(({ product }) => {
   return (
     <Link to={`/product/${product.slug}`} className="group product-card block">
       {/* Image Container */}
@@ -14,6 +15,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
         <img
           src={product.images[0]}
           alt={product.name}
+          loading="lazy" // ⚡ Bolt Performance Optimization: Lazy loading for images
           className="w-full h-full object-cover product-card-image transition-opacity duration-500 group-hover:opacity-0"
         />
         {/* Placeholder Video for Cinematic Hover State */}
@@ -91,6 +93,8 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
       </div>
     </Link>
   );
-};
+});
+
+ProductCard.displayName = 'ProductCard';
 
 export default ProductCard;
