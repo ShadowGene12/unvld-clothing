@@ -19,9 +19,29 @@ const Shop: React.FC = () => {
   const [priceRange, setPriceRange] = useState<[number, number]>([0, 500]);
   const [sortBy, setSortBy] = useState<SortOption>('newest');
 
-  const categories = [...new Set(products.map(p => p.category))];
-  const sizes = [...new Set(products.flatMap(p => p.sizes))];
-  const colors = [...new Set(products.flatMap(p => p.colors.map(c => c.name)))];
+  const { categories, sizes, colors } = useMemo(() => {
+    // ⚡ Bolt: Optimize filter attribute extraction
+    // We combine three O(n) loops into a single O(n) pass using reduce.
+    // This avoids multiple intermediate array allocations (map/flatMap) and improves initialization performance.
+    const result = products.reduce(
+      (acc, p) => {
+        if (p.category) acc.categories.add(p.category);
+        if (p.sizes) p.sizes.forEach(s => acc.sizes.add(s));
+        if (p.colors) p.colors.forEach(c => acc.colors.add(c.name));
+        return acc;
+      },
+      {
+        categories: new Set<string>(),
+        sizes: new Set<string>(),
+        colors: new Set<string>(),
+      }
+    );
+    return {
+      categories: Array.from(result.categories),
+      sizes: Array.from(result.sizes),
+      colors: Array.from(result.colors),
+    };
+  }, []); // products is statically imported
 
   const filteredProducts = useMemo(() => {
     let result = [...products];
