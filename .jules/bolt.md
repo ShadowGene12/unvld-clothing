@@ -1,0 +1,3 @@
+## 2024-05-24 - React useMemo array iteration overhead
+**Learning:** `useMemo` isn't always free. When used inside a component that renders frequently, or when the calculation itself is fast but allocating new arrays/objects is slow, we should optimize the array iterations themselves. In `Shop.tsx`, we can see multiple loops over the same array to calculate sets of unique categories, sizes, and colors. This can be combined into a single pass to save on iteration overhead.
+**Action:** Replace multiple `.flatMap` and `.map` calls with a single `reduce` pass when extracting unique attributes from a list of products.
