@@ -11,10 +11,12 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
     <Link to={`/product/${product.slug}`} className="group product-card block">
       {/* Image Container */}
       <div className="relative aspect-[3/4] bg-muted overflow-hidden mb-4">
+        {/* ⚡ Bolt Optimization: Lazy load off-screen images to improve initial page load speed */}
         <img
           src={product.images[0]}
           alt={product.name}
           className="w-full h-full object-cover product-card-image transition-opacity duration-500 group-hover:opacity-0"
+          loading="lazy"
         />
         {/* Placeholder Video for Cinematic Hover State */}
         <video 
@@ -93,4 +95,5 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
   );
 };
 
-export default ProductCard;
+// ⚡ Bolt Optimization: Memoize ProductCard to prevent unnecessary re-renders in large grids
+export default React.memo(ProductCard);
