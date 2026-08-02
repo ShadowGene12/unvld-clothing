@@ -143,7 +143,9 @@ const Shop: React.FC = () => {
                 onSubmit={(e) => { e.preventDefault(); setIsAuthenticated(true); }}
                 className="mt-8 space-y-4"
               >
+                <label htmlFor="loginEmail" className="sr-only">Email address</label>
                 <input
+                  id="loginEmail"
                   type="email"
                   value={loginEmail}
                   onChange={(e) => setLoginEmail(e.target.value)}
@@ -303,6 +305,7 @@ const Shop: React.FC = () => {
               <button
                 onClick={() => setIsFiltersOpen(false)}
                 className="p-2 hover:bg-accent transition-colors"
+                aria-label="Close filters"
               >
                 <X className="w-5 h-5" />
               </button>
