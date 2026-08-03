@@ -148,6 +148,7 @@ const Shop: React.FC = () => {
                   value={loginEmail}
                   onChange={(e) => setLoginEmail(e.target.value)}
                   placeholder="Email address"
+                  aria-label="Email address"
                   className="w-full px-4 py-3 bg-transparent border border-border focus:border-foreground focus:outline-none transition-colors text-center"
                   required
                 />
@@ -303,6 +304,7 @@ const Shop: React.FC = () => {
               <button
                 onClick={() => setIsFiltersOpen(false)}
                 className="p-2 hover:bg-accent transition-colors"
+                aria-label="Close filters"
               >
                 <X className="w-5 h-5" />
               </button>
