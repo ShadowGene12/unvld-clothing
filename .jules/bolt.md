@@ -1,0 +1,3 @@
+## 2024-05-24 - Inline Component & Array Instantiation Unnecessary Re-renders
+**Learning:** Defining components (like `FilterSelect`) inside another React component's render function causes them to be treated as a new component on every render, triggering full unmounts and remounts of the DOM nodes and their state. Also, initializing arrays synchronously inside the component body from static data (like `categories`, `sizes`, `colors` derived from `products`) causes unnecessary recalculations and referential inequality on every re-render.
+**Action:** Hoist the definitions of inline child components outside of the parent component body. Hoist array initializations derived from static data outside of the component body or wrap them in `useMemo` if they depend on props.
