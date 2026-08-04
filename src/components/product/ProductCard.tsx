@@ -6,7 +6,8 @@ interface ProductCardProps {
   product: Product;
 }
 
-const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
+// ⚡ Bolt: Wrap in React.memo to prevent unnecessary re-renders when parent lists update (e.g., when typing in the email capture form on the Shop page)
+const ProductCard: React.FC<ProductCardProps> = React.memo(({ product }) => {
   return (
     <Link to={`/product/${product.slug}`} className="group product-card block">
       {/* Image Container */}
@@ -91,6 +92,6 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
       </div>
     </Link>
   );
-};
+});
 
 export default ProductCard;
