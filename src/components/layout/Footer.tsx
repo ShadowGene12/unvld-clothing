@@ -56,6 +56,7 @@ const Footer: React.FC = () => {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="Your email"
+                aria-label="Your email"
                 className="flex-1 px-4 py-3 bg-transparent border border-background/20 text-background placeholder:text-background/40 focus:outline-none focus:border-background/60 transition-colors"
                 required
               />
