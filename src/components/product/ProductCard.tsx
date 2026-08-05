@@ -6,7 +6,9 @@ interface ProductCardProps {
   product: Product;
 }
 
-const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
+// Performance optimization: Memoize ProductCard to prevent unnecessary re-renders
+// when parent components (like Shop or CollectionDetail) re-render due to filter changes.
+const ProductCard: React.FC<ProductCardProps> = React.memo(({ product }) => {
   return (
     <Link to={`/product/${product.slug}`} className="group product-card block">
       {/* Image Container */}
@@ -14,6 +16,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
         <img
           src={product.images[0]}
           alt={product.name}
+          loading="lazy" // Performance optimization: Defer loading off-screen images
           className="w-full h-full object-cover product-card-image transition-opacity duration-500 group-hover:opacity-0"
         />
         {/* Placeholder Video for Cinematic Hover State */}
@@ -91,6 +94,6 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
       </div>
     </Link>
   );
-};
+});
 
 export default ProductCard;
