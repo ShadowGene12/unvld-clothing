@@ -188,6 +188,8 @@ const Shop: React.FC = () => {
             <button
               onClick={() => setIsFiltersOpen(!isFiltersOpen)}
               className="lg:hidden flex items-center gap-2 px-4 py-2 border border-border hover:bg-accent transition-colors"
+              aria-expanded={isFiltersOpen}
+              aria-controls="mobile-filters"
             >
               <SlidersHorizontal className="w-4 h-4" />
               Filters
@@ -292,7 +294,7 @@ const Shop: React.FC = () => {
 
       {/* Mobile Filters Modal */}
       {isFiltersOpen && (
-        <div className="fixed inset-0 z-[60] lg:hidden">
+        <div id="mobile-filters" className="fixed inset-0 z-[60] lg:hidden">
           <div
             className="absolute inset-0 bg-foreground/20"
             onClick={() => setIsFiltersOpen(false)}
@@ -303,6 +305,7 @@ const Shop: React.FC = () => {
               <button
                 onClick={() => setIsFiltersOpen(false)}
                 className="p-2 hover:bg-accent transition-colors"
+                aria-label="Close filters"
               >
                 <X className="w-5 h-5" />
               </button>

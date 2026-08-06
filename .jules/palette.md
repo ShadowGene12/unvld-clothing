@@ -1,0 +1,3 @@
+## 2024-08-06 - Missing Mobile Menu Controls
+**Learning:** Mobile sliding menus in this application's components (like filters) were implemented without standard screen reader contexts like `aria-expanded` on the toggle button or `aria-controls` referencing the modal container ID. Close buttons were also missing `aria-label`.
+**Action:** Next time working on custom interactive elements (drawers, modals, dropdowns), ensure toggle buttons declare their state (`aria-expanded`) and specifically what they control (`aria-controls`), and that icon-only dismiss buttons have descriptive `aria-label` attributes to ensure screen reader users can navigate them properly.
