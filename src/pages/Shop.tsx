@@ -7,6 +7,12 @@ import ProductCard from '@/components/product/ProductCard';
 
 type SortOption = 'newest' | 'bestselling' | 'price-asc' | 'price-desc';
 
+// ⚡ Bolt Performance: Extract static filter options outside component
+// to prevent recalculation on every render
+const categories = [...new Set(products.map(p => p.category))];
+const sizes = [...new Set(products.flatMap(p => p.sizes))];
+const colors = [...new Set(products.flatMap(p => p.colors.map(c => c.name)))];
+
 const Shop: React.FC = () => {
   const [isFiltersOpen, setIsFiltersOpen] = useState(false);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -19,47 +25,31 @@ const Shop: React.FC = () => {
   const [priceRange, setPriceRange] = useState<[number, number]>([0, 500]);
   const [sortBy, setSortBy] = useState<SortOption>('newest');
 
-  const categories = [...new Set(products.map(p => p.category))];
-  const sizes = [...new Set(products.flatMap(p => p.sizes))];
-  const colors = [...new Set(products.flatMap(p => p.colors.map(c => c.name)))];
-
   const filteredProducts = useMemo(() => {
-    let result = [...products];
-
-    // Filter by Archive Status
-    if (isArchiveView) {
-      result = result.filter(p => p.isArchived);
-    } else {
-      result = result.filter(p => !p.isArchived);
-    }
-
-    if (selectedCollection) {
-      result = result.filter(p => p.collectionSlug === selectedCollection);
-    }
-    if (selectedCategory) {
-      result = result.filter(p => p.category === selectedCategory);
-    }
-    if (selectedSize) {
-      result = result.filter(p => p.sizes.includes(selectedSize));
-    }
-    if (selectedColor) {
-      result = result.filter(p => p.colors.some(c => c.name === selectedColor));
-    }
-    result = result.filter(p => p.price >= priceRange[0] && p.price <= priceRange[1]);
+    // ⚡ Bolt Performance: Combine multiple O(N) filter passes into a single O(N) pass
+    const result = products.filter(p => {
+      if (isArchiveView ? !p.isArchived : p.isArchived) return false;
+      if (selectedCollection && p.collectionSlug !== selectedCollection) return false;
+      if (selectedCategory && p.category !== selectedCategory) return false;
+      if (selectedSize && !p.sizes.includes(selectedSize)) return false;
+      if (selectedColor && !p.colors.some(c => c.name === selectedColor)) return false;
+      if (p.price < priceRange[0] || p.price > priceRange[1]) return false;
+      return true;
+    });
 
     // Sort
     switch (sortBy) {
       case 'newest':
-        result = result.sort((a, b) => (b.isNew ? 1 : 0) - (a.isNew ? 1 : 0));
+        result.sort((a, b) => (b.isNew ? 1 : 0) - (a.isNew ? 1 : 0));
         break;
       case 'bestselling':
-        result = result.sort((a, b) => (b.isBestseller ? 1 : 0) - (a.isBestseller ? 1 : 0));
+        result.sort((a, b) => (b.isBestseller ? 1 : 0) - (a.isBestseller ? 1 : 0));
         break;
       case 'price-asc':
-        result = result.sort((a, b) => a.price - b.price);
+        result.sort((a, b) => a.price - b.price);
         break;
       case 'price-desc':
-        result = result.sort((a, b) => b.price - a.price);
+        result.sort((a, b) => b.price - a.price);
         break;
     }
 
