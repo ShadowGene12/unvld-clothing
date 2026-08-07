@@ -19,9 +19,10 @@ const Shop: React.FC = () => {
   const [priceRange, setPriceRange] = useState<[number, number]>([0, 500]);
   const [sortBy, setSortBy] = useState<SortOption>('newest');
 
-  const categories = [...new Set(products.map(p => p.category))];
-  const sizes = [...new Set(products.flatMap(p => p.sizes))];
-  const colors = [...new Set(products.flatMap(p => p.colors.map(c => c.name)))];
+  // ⚡ Bolt: Memoize derived filter options to prevent expensive array operations (map, flatMap, Set) on every render
+  const categories = useMemo(() => [...new Set(products.map(p => p.category))], [products]);
+  const sizes = useMemo(() => [...new Set(products.flatMap(p => p.sizes))], [products]);
+  const colors = useMemo(() => [...new Set(products.flatMap(p => p.colors.map(c => c.name)))], [products]);
 
   const filteredProducts = useMemo(() => {
     let result = [...products];
