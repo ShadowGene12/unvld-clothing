@@ -225,14 +225,17 @@ const ProductDetail: React.FC = () => {
 
             {/* Notify / Early Access */}
             <form onSubmit={handleNotify} className="flex gap-2 mb-8">
+              <label htmlFor="notify-email" className="sr-only">Email address for restock notifications</label>
               <input
+                id="notify-email"
                 type="email"
+                required
                 value={notifyEmail}
                 onChange={e => setNotifyEmail(e.target.value)}
                 placeholder="Notify me of restocks"
                 className="flex-1 px-4 py-3 bg-transparent border border-border text-sm placeholder:text-muted-foreground focus:outline-none focus:border-foreground transition-colors"
               />
-              <button type="submit" className="px-4 py-3 border border-border hover:bg-foreground hover:text-background hover:border-foreground transition-colors">
+              <button type="submit" aria-label="Notify me" className="px-4 py-3 border border-border hover:bg-foreground hover:text-background hover:border-foreground transition-colors">
                 <Bell className="w-4 h-4" />
               </button>
             </form>
