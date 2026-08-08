@@ -19,9 +19,12 @@ const Shop: React.FC = () => {
   const [priceRange, setPriceRange] = useState<[number, number]>([0, 500]);
   const [sortBy, setSortBy] = useState<SortOption>('newest');
 
-  const categories = [...new Set(products.map(p => p.category))];
-  const sizes = [...new Set(products.flatMap(p => p.sizes))];
-  const colors = [...new Set(products.flatMap(p => p.colors.map(c => c.name)))];
+  // ⚡ Bolt: Memoize filter extractions to prevent O(N) recalculations on every render,
+  // particularly to avoid lag during keystrokes in the loginEmail input.
+  // Using an empty dependency array since `products` is statically imported and does not change.
+  const categories = useMemo(() => [...new Set(products.map(p => p.category))], []);
+  const sizes = useMemo(() => [...new Set(products.flatMap(p => p.sizes))], []);
+  const colors = useMemo(() => [...new Set(products.flatMap(p => p.colors.map(c => c.name)))], []);
 
   const filteredProducts = useMemo(() => {
     let result = [...products];
