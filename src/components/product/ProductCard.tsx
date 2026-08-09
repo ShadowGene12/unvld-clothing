@@ -8,7 +8,7 @@ interface ProductCardProps {
 
 const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
   return (
-    <Link to={`/product/${product.slug}`} className="group product-card block">
+    <Link to={`/product/${product.slug}`} className="group product-card block focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2">
       {/* Image Container */}
       <div className="relative aspect-[3/4] bg-muted overflow-hidden mb-4">
         <img
@@ -42,13 +42,14 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
         </div>
 
         {/* Quick Add - Shows on hover */}
-        <div className="absolute inset-x-0 bottom-0 p-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+        <div className="absolute inset-x-0 bottom-0 p-4 opacity-0 group-hover:opacity-100 focus-within:opacity-100 transition-opacity duration-300">
           <button
             onClick={(e) => {
               e.preventDefault();
               // TODO: Quick add modal
             }}
-            className="w-full py-3 text-xs font-medium tracking-wider uppercase bg-background/95 text-foreground hover:bg-foreground hover:text-background transition-colors"
+            aria-label={`Quick add ${product.name}`}
+            className="w-full py-3 text-xs font-medium tracking-wider uppercase bg-background/95 text-foreground hover:bg-foreground hover:text-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
           >
             Quick Add
           </button>

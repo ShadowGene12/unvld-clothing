@@ -1,0 +1,3 @@
+## 2025-03-05 - Keyboard Accessible Hover Actions
+**Learning:** Buttons revealed via `group-hover:opacity-100` are inaccessible to keyboard users navigating via Tab, causing a critical accessibility gap for primary e-commerce actions like "Quick Add".
+**Action:** Always combine `group-hover:opacity-100` with `focus-within:opacity-100` on the wrapper, and ensure interactive elements have robust `focus-visible` styles and context-aware `aria-label` attributes.
