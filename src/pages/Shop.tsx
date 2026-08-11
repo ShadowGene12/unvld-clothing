@@ -19,9 +19,10 @@ const Shop: React.FC = () => {
   const [priceRange, setPriceRange] = useState<[number, number]>([0, 500]);
   const [sortBy, setSortBy] = useState<SortOption>('newest');
 
-  const categories = [...new Set(products.map(p => p.category))];
-  const sizes = [...new Set(products.flatMap(p => p.sizes))];
-  const colors = [...new Set(products.flatMap(p => p.colors.map(c => c.name)))];
+  // ⚡ Bolt: Memoize filter options derived from static mock data to prevent O(N) array iterations and allocations on every render
+  const categories = useMemo(() => [...new Set(products.map(p => p.category))], []);
+  const sizes = useMemo(() => [...new Set(products.flatMap(p => p.sizes))], []);
+  const colors = useMemo(() => [...new Set(products.flatMap(p => p.colors.map(c => c.name)))], []);
 
   const filteredProducts = useMemo(() => {
     let result = [...products];
