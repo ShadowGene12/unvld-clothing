@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { Product } from '@/data/mockData';
 
@@ -7,8 +7,13 @@ interface ProductCardProps {
 }
 
 const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
+  const videoRef = useRef<HTMLVideoElement>(null);
+
   return (
-    <Link to={`/product/${product.slug}`} className="group product-card block">
+    <Link to={`/product/${product.slug}`} className="group product-card block"
+      // Performance optimization: Only play the video when hovered to save CPU/GPU resources and battery
+      onMouseEnter={() => videoRef.current?.play().catch(() => {})}
+      onMouseLeave={() => videoRef.current?.pause()}>
       {/* Image Container */}
       <div className="relative aspect-[3/4] bg-muted overflow-hidden mb-4">
         <img
@@ -18,7 +23,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
         />
         {/* Placeholder Video for Cinematic Hover State */}
         <video 
-          autoPlay 
+          ref={videoRef}
           loop 
           muted 
           playsInline 
