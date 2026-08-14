@@ -1,0 +1,3 @@
+## 2024-05-23 - Handle AbortError on Video Play
+**Learning:** When manually triggering `.play()` on video elements (e.g., during hover interactions), it returns a promise. If `.pause()` is invoked before the video finishes buffering and begins playback, an unhandled `AbortError` exception is thrown.
+**Action:** Always attach a `.catch(() => {})` to the resulting promise when manually triggering `.play()` to prevent unhandled exceptions.
