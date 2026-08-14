@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { Product } from '@/data/mockData';
 
@@ -7,8 +7,29 @@ interface ProductCardProps {
 }
 
 const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
+  const videoRef = useRef<HTMLVideoElement>(null);
+
+  const handleMouseEnter = () => {
+    if (videoRef.current) {
+      videoRef.current.play().catch(() => {
+        // Ignore AbortError when pause is called before play finishes
+      });
+    }
+  };
+
+  const handleMouseLeave = () => {
+    if (videoRef.current) {
+      videoRef.current.pause();
+    }
+  };
+
   return (
-    <Link to={`/product/${product.slug}`} className="group product-card block">
+    <Link
+      to={`/product/${product.slug}`}
+      className="group product-card block"
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
+    >
       {/* Image Container */}
       <div className="relative aspect-[3/4] bg-muted overflow-hidden mb-4">
         <img
@@ -18,10 +39,11 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
         />
         {/* Placeholder Video for Cinematic Hover State */}
         <video 
-          autoPlay 
+          ref={videoRef}
           loop 
           muted 
           playsInline 
+          preload="none"
           className="absolute inset-0 w-full h-full object-cover opacity-0 group-hover:opacity-100 transition-opacity duration-500"
         >
           <source src="https://cdn.coverr.co/videos/coverr-walking-through-the-city-at-night-8133/1080p.mp4" type="video/mp4" />
