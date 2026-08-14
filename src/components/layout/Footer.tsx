@@ -5,15 +5,21 @@ import { toast } from '@/hooks/use-toast';
 
 const Footer: React.FC = () => {
   const [email, setEmail] = useState('');
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const handleNewsletterSubmit = (e: React.FormEvent) => {
+  const handleNewsletterSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (email) {
+      setIsSubmitting(true);
+      // Simulate network request
+      await new Promise(resolve => setTimeout(resolve, 800));
+
       toast({
         title: "Welcome to UNVLD",
         description: "You've been added to our mailing list.",
       });
       setEmail('');
+      setIsSubmitting(false);
     }
   };
 
@@ -50,21 +56,34 @@ const Footer: React.FC = () => {
             <p className="text-background/60 mb-6">
               First access to new drops, exclusive content, and stories from the community.
             </p>
-            <form onSubmit={handleNewsletterSubmit} className="flex gap-2">
-              <input
-                type="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                placeholder="Your email"
-                className="flex-1 px-4 py-3 bg-transparent border border-background/20 text-background placeholder:text-background/40 focus:outline-none focus:border-background/60 transition-colors"
-                required
-              />
-              <button
-                type="submit"
-                className="px-6 py-3 bg-primary text-primary-foreground font-medium tracking-wider uppercase text-sm hover:bg-primary/90 transition-colors"
-              >
-                Subscribe
-              </button>
+            <form onSubmit={handleNewsletterSubmit} className="flex flex-col gap-2 relative">
+              <label htmlFor="newsletter-email" className="sr-only">Email address</label>
+              <div className="flex gap-2">
+                <input
+                  id="newsletter-email"
+                  type="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  placeholder="Your email"
+                  disabled={isSubmitting}
+                  className="flex-1 px-4 py-3 bg-transparent border border-background/20 text-background placeholder:text-background/40 focus:outline-none focus:border-background/60 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                  required
+                />
+                <button
+                  type="submit"
+                  disabled={isSubmitting}
+                  className="px-6 py-3 bg-primary text-primary-foreground font-medium tracking-wider uppercase text-sm hover:bg-primary/90 transition-colors disabled:opacity-70 disabled:cursor-not-allowed min-w-[140px] flex items-center justify-center"
+                >
+                  {isSubmitting ? (
+                    <span className="flex items-center gap-2">
+                      <span className="w-4 h-4 border-2 border-primary-foreground/30 border-t-primary-foreground rounded-full animate-spin" />
+                      Wait
+                    </span>
+                  ) : (
+                    'Subscribe'
+                  )}
+                </button>
+              </div>
             </form>
           </div>
         </div>
