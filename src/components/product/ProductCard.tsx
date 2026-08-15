@@ -93,4 +93,6 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
   );
 };
 
-export default ProductCard;
+// ⚡ Bolt Optimization: Wrap component in React.memo to prevent unnecessary re-renders
+// Expected Impact: Reduces DOM reconciliation when parent filter state changes in Shop grid.
+export default React.memo(ProductCard);
