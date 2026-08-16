@@ -232,7 +232,7 @@ const ProductDetail: React.FC = () => {
                 placeholder="Notify me of restocks"
                 className="flex-1 px-4 py-3 bg-transparent border border-border text-sm placeholder:text-muted-foreground focus:outline-none focus:border-foreground transition-colors"
               />
-              <button type="submit" className="px-4 py-3 border border-border hover:bg-foreground hover:text-background hover:border-foreground transition-colors">
+              <button type="submit" aria-label="Notify me of restocks" className="px-4 py-3 border border-border hover:bg-foreground hover:text-background hover:border-foreground transition-colors">
                 <Bell className="w-4 h-4" />
               </button>
             </form>
