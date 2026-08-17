@@ -303,6 +303,7 @@ const Shop: React.FC = () => {
               <button
                 onClick={() => setIsFiltersOpen(false)}
                 className="p-2 hover:bg-accent transition-colors"
+                aria-label="Close filters"
               >
                 <X className="w-5 h-5" />
               </button>
