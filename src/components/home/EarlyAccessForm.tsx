@@ -53,6 +53,7 @@ const EarlyAccessForm: React.FC = () => {
                   type="email"
                   {...register('email')}
                   placeholder="Your email"
+                  aria-label="Email address"
                   className={`flex-1 px-5 py-4 bg-transparent border ${errors.email ? 'border-red-500' : 'border-border'} text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-foreground transition-colors text-sm`}
                   disabled={isSubmitting}
                 />
