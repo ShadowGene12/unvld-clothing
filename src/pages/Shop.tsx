@@ -149,6 +149,7 @@ const Shop: React.FC = () => {
                   onChange={(e) => setLoginEmail(e.target.value)}
                   placeholder="Email address"
                   className="w-full px-4 py-3 bg-transparent border border-border focus:border-foreground focus:outline-none transition-colors text-center"
+                  aria-label="Email address for early access"
                   required
                 />
                 <button type="submit" className="w-full btn-hero-primary">
@@ -303,6 +304,7 @@ const Shop: React.FC = () => {
               <button
                 onClick={() => setIsFiltersOpen(false)}
                 className="p-2 hover:bg-accent transition-colors"
+                aria-label="Close filters"
               >
                 <X className="w-5 h-5" />
               </button>

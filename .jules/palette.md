@@ -1,0 +1,3 @@
+## 2024-05-24 - Missing Form Labels Pattern
+**Learning:** Found a recurring accessibility issue where standalone email inputs across the application (Footer, Shop, ProductDetail, WorldDetail) rely solely on placeholder text for labeling. Placeholders are not reliably read by screen readers and disappear on input, degrading the experience for assistive technology users.
+**Action:** Added `aria-label` attributes to these standalone inputs to ensure they are properly announced by screen readers without disrupting the minimalist visual design. Future forms should either use visible `<label>` elements or include `aria-label` when visually hidden.
