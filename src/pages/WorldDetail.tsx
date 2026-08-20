@@ -189,6 +189,7 @@ const WorldDetail: React.FC = () => {
                 onChange={e => setEmail(e.target.value)}
                 placeholder="Your email"
                 className="flex-1 px-5 py-4 bg-transparent border border-background/20 text-background placeholder:text-background/40 focus:outline-none focus:border-background/60 transition-colors text-sm"
+                aria-label="Email address to join world"
                 required
               />
               <button
