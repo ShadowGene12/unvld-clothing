@@ -185,6 +185,7 @@ const WorldDetail: React.FC = () => {
             <form onSubmit={handleJoinWorld} className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto">
               <input
                 type="email"
+                aria-label="Email address for early access"
                 value={email}
                 onChange={e => setEmail(e.target.value)}
                 placeholder="Your email"
