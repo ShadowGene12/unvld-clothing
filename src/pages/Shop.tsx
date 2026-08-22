@@ -145,6 +145,7 @@ const Shop: React.FC = () => {
               >
                 <input
                   type="email"
+                  aria-label="Email address for access"
                   value={loginEmail}
                   onChange={(e) => setLoginEmail(e.target.value)}
                   placeholder="Email address"
