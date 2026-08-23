@@ -68,6 +68,8 @@ const Header: React.FC = () => {
                     'flex items-center gap-1 text-sm tracking-wide py-1',
                     location.pathname.includes('/worlds') && 'font-medium'
                   )}
+                  aria-haspopup="menu"
+                  aria-expanded={isWorldsOpen}
                 >
                   Worlds
                   <ChevronDown className={cn('w-4 h-4 transition-transform duration-200', isWorldsOpen && 'rotate-180')} />
@@ -156,12 +158,18 @@ const Header: React.FC = () => {
               <Link to="/" className="block py-3 text-lg border-b border-border">Home</Link>
 
               <div className="py-3 border-b border-border">
-                <button onClick={() => setIsWorldsOpen(!isWorldsOpen)} className="flex items-center justify-between w-full text-lg">
+                <button
+                  onClick={() => setIsWorldsOpen(!isWorldsOpen)}
+                  className="flex items-center justify-between w-full text-lg"
+                  aria-haspopup="menu"
+                  aria-expanded={isWorldsOpen}
+                  aria-controls="mobile-worlds-menu"
+                >
                   Worlds
                   <ChevronDown className={cn('w-5 h-5 transition-transform duration-200', isWorldsOpen && 'rotate-180')} />
                 </button>
                 {isWorldsOpen && (
-                  <div className="mt-2 pl-4 space-y-2">
+                  <div id="mobile-worlds-menu" className="mt-2 pl-4 space-y-2">
                     <Link to="/worlds" className="block py-2 text-muted-foreground">All Worlds</Link>
                     {collections.map(c => (
                       <Link key={c.slug} to={`/worlds/${c.slug}`} className="block py-2 text-muted-foreground">
