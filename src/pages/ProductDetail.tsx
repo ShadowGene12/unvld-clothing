@@ -175,6 +175,7 @@ const ProductDetail: React.FC = () => {
                     style={{ backgroundColor: color.hex }}
                     title={color.name}
                     aria-label={color.name}
+                    aria-pressed={selectedColor === color.name}
                   />
                 ))}
               </div>
@@ -192,6 +193,7 @@ const ProductDetail: React.FC = () => {
                     key={size}
                     onClick={() => setSelectedSize(size)}
                     className={`min-w-[48px] px-4 py-2 border text-sm font-medium transition-colors ${selectedSize === size ? 'border-foreground bg-foreground text-background' : 'border-border hover:border-foreground'}`}
+                    aria-pressed={selectedSize === size}
                   >
                     {size}
                   </button>
@@ -230,9 +232,11 @@ const ProductDetail: React.FC = () => {
                 value={notifyEmail}
                 onChange={e => setNotifyEmail(e.target.value)}
                 placeholder="Notify me of restocks"
+                aria-label="Email address for restock notifications"
+                required
                 className="flex-1 px-4 py-3 bg-transparent border border-border text-sm placeholder:text-muted-foreground focus:outline-none focus:border-foreground transition-colors"
               />
-              <button type="submit" className="px-4 py-3 border border-border hover:bg-foreground hover:text-background hover:border-foreground transition-colors">
+              <button type="submit" aria-label="Submit restock notification" title="Notify me" className="px-4 py-3 border border-border hover:bg-foreground hover:text-background hover:border-foreground transition-colors">
                 <Bell className="w-4 h-4" />
               </button>
             </form>
