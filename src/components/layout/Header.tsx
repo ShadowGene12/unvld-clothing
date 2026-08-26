@@ -39,6 +39,7 @@ const Header: React.FC = () => {
               onClick={() => setIsMobileMenuOpen(true)}
               className="lg:hidden p-2 -ml-2 hover:bg-accent transition-colors"
               aria-label="Open menu"
+              aria-expanded={isMobileMenuOpen}
             >
               <Menu className="w-6 h-6" />
             </button>
@@ -68,6 +69,7 @@ const Header: React.FC = () => {
                     'flex items-center gap-1 text-sm tracking-wide py-1',
                     location.pathname.includes('/worlds') && 'font-medium'
                   )}
+                  aria-expanded={isWorldsOpen}
                 >
                   Worlds
                   <ChevronDown className={cn('w-4 h-4 transition-transform duration-200', isWorldsOpen && 'rotate-180')} />
@@ -156,7 +158,7 @@ const Header: React.FC = () => {
               <Link to="/" className="block py-3 text-lg border-b border-border">Home</Link>
 
               <div className="py-3 border-b border-border">
-                <button onClick={() => setIsWorldsOpen(!isWorldsOpen)} className="flex items-center justify-between w-full text-lg">
+                <button onClick={() => setIsWorldsOpen(!isWorldsOpen)} className="flex items-center justify-between w-full text-lg" aria-expanded={isWorldsOpen}>
                   Worlds
                   <ChevronDown className={cn('w-5 h-5 transition-transform duration-200', isWorldsOpen && 'rotate-180')} />
                 </button>
