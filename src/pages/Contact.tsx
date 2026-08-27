@@ -104,8 +104,9 @@ const Contact: React.FC = () => {
           <div>
             <form onSubmit={handleSubmit} className="space-y-6">
               <div>
-                <label className="block text-sm font-medium mb-2">Name *</label>
+                <label htmlFor="name" className="block text-sm font-medium mb-2">Name *</label>
                 <input
+                  id="name"
                   type="text"
                   name="name"
                   value={formData.name}
@@ -116,8 +117,9 @@ const Contact: React.FC = () => {
               </div>
 
               <div>
-                <label className="block text-sm font-medium mb-2">Email *</label>
+                <label htmlFor="email" className="block text-sm font-medium mb-2">Email *</label>
                 <input
+                  id="email"
                   type="email"
                   name="email"
                   value={formData.email}
@@ -128,8 +130,9 @@ const Contact: React.FC = () => {
               </div>
 
               <div>
-                <label className="block text-sm font-medium mb-2">Subject *</label>
+                <label htmlFor="subject" className="block text-sm font-medium mb-2">Subject *</label>
                 <select
+                  id="subject"
                   name="subject"
                   value={formData.subject}
                   onChange={handleChange}
@@ -147,8 +150,9 @@ const Contact: React.FC = () => {
               </div>
 
               <div>
-                <label className="block text-sm font-medium mb-2">Message *</label>
+                <label htmlFor="message" className="block text-sm font-medium mb-2">Message *</label>
                 <textarea
+                  id="message"
                   name="message"
                   value={formData.message}
                   onChange={handleChange}
