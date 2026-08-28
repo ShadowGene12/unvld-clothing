@@ -1,0 +1,3 @@
+## 2024-05-23 - Moved statically derived sets outside React Component
+**Learning:** Derived variables that rely solely on statically imported data (like `categories`, `sizes`, `colors` derived from `import { products } from '@/data/mockData'`) should be declared in the module scope (outside the React component). Defining them inside the component forces unnecessary calculation of the same sets on every re-render.
+**Action:** When finding `products.map()` or `new Set()` inside a component body that only depends on static imports, move the declarations outside the component entirely rather than trying to wrap them in `useMemo`.
