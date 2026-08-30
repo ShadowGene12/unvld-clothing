@@ -55,6 +55,8 @@ const EarlyAccessForm: React.FC = () => {
                   placeholder="Your email"
                   className={`flex-1 px-5 py-4 bg-transparent border ${errors.email ? 'border-red-500' : 'border-border'} text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-foreground transition-colors text-sm`}
                   disabled={isSubmitting}
+                  aria-invalid={!!errors.email}
+                  aria-describedby={errors.email ? "email-error" : undefined}
                 />
                 <button
                   type="submit"
@@ -65,7 +67,7 @@ const EarlyAccessForm: React.FC = () => {
                 </button>
               </div>
               {errors.email && (
-                <p className="text-red-500 text-sm text-left">{errors.email.message}</p>
+                <p id="email-error" role="alert" className="text-red-500 text-sm text-left">{errors.email.message}</p>
               )}
             </form>
           </motion.div>
