@@ -188,6 +188,7 @@ const Shop: React.FC = () => {
             <button
               onClick={() => setIsFiltersOpen(!isFiltersOpen)}
               className="lg:hidden flex items-center gap-2 px-4 py-2 border border-border hover:bg-accent transition-colors"
+              aria-expanded={isFiltersOpen}
             >
               <SlidersHorizontal className="w-4 h-4" />
               Filters
