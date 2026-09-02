@@ -39,6 +39,8 @@ const Header: React.FC = () => {
               onClick={() => setIsMobileMenuOpen(true)}
               className="lg:hidden p-2 -ml-2 hover:bg-accent transition-colors"
               aria-label="Open menu"
+              aria-expanded={isMobileMenuOpen}
+              aria-controls="mobile-menu"
             >
               <Menu className="w-6 h-6" />
             </button>
@@ -68,12 +70,14 @@ const Header: React.FC = () => {
                     'flex items-center gap-1 text-sm tracking-wide py-1',
                     location.pathname.includes('/worlds') && 'font-medium'
                   )}
+                  aria-expanded={isWorldsOpen}
+                  aria-controls="worlds-desktop-menu"
                 >
                   Worlds
                   <ChevronDown className={cn('w-4 h-4 transition-transform duration-200', isWorldsOpen && 'rotate-180')} />
                 </button>
                 {isWorldsOpen && (
-                  <div className="absolute top-full left-0 pt-2 animate-fade-in">
+                  <div id="worlds-desktop-menu" className="absolute top-full left-0 pt-2 animate-fade-in">
                     <div className="bg-background border border-border shadow-lg min-w-[200px]">
                       <Link to="/worlds" className="block px-4 py-3 text-sm hover:bg-accent transition-colors border-b border-border">
                         All Worlds
@@ -145,7 +149,7 @@ const Header: React.FC = () => {
       {isMobileMenuOpen && (
         <div className="fixed inset-0 z-[60] lg:hidden">
           <div className="absolute inset-0 bg-foreground/20" onClick={() => setIsMobileMenuOpen(false)} />
-          <div className="absolute inset-y-0 left-0 w-full max-w-sm bg-background animate-slide-in-right">
+          <div id="mobile-menu" className="absolute inset-y-0 left-0 w-full max-w-sm bg-background animate-slide-in-right">
             <div className="flex items-center justify-between p-4 border-b border-border">
               <span className="text-lg font-semibold tracking-[0.2em] uppercase">UNVLD</span>
               <button onClick={() => setIsMobileMenuOpen(false)} className="p-2 hover:bg-accent transition-colors" aria-label="Close menu">
@@ -156,12 +160,12 @@ const Header: React.FC = () => {
               <Link to="/" className="block py-3 text-lg border-b border-border">Home</Link>
 
               <div className="py-3 border-b border-border">
-                <button onClick={() => setIsWorldsOpen(!isWorldsOpen)} className="flex items-center justify-between w-full text-lg">
+                <button onClick={() => setIsWorldsOpen(!isWorldsOpen)} className="flex items-center justify-between w-full text-lg" aria-expanded={isWorldsOpen} aria-controls="worlds-mobile-menu">
                   Worlds
                   <ChevronDown className={cn('w-5 h-5 transition-transform duration-200', isWorldsOpen && 'rotate-180')} />
                 </button>
                 {isWorldsOpen && (
-                  <div className="mt-2 pl-4 space-y-2">
+                  <div id="worlds-mobile-menu" className="mt-2 pl-4 space-y-2">
                     <Link to="/worlds" className="block py-2 text-muted-foreground">All Worlds</Link>
                     {collections.map(c => (
                       <Link key={c.slug} to={`/worlds/${c.slug}`} className="block py-2 text-muted-foreground">
