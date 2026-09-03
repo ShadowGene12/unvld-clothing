@@ -5,7 +5,15 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { products, collections } from '@/data/mockData';
 import ProductCard from '@/components/product/ProductCard';
 
+
 type SortOption = 'newest' | 'bestselling' | 'price-asc' | 'price-desc';
+
+// Performance optimization: derived state from static mock data is computed outside
+// the component to prevent unnecessary re-calculations on every render.
+const categories = [...new Set(products.map(p => p.category))];
+const sizes = [...new Set(products.flatMap(p => p.sizes))];
+const colors = [...new Set(products.flatMap(p => p.colors.map(c => c.name)))];
+
 
 const Shop: React.FC = () => {
   const [isFiltersOpen, setIsFiltersOpen] = useState(false);
@@ -19,9 +27,6 @@ const Shop: React.FC = () => {
   const [priceRange, setPriceRange] = useState<[number, number]>([0, 500]);
   const [sortBy, setSortBy] = useState<SortOption>('newest');
 
-  const categories = [...new Set(products.map(p => p.category))];
-  const sizes = [...new Set(products.flatMap(p => p.sizes))];
-  const colors = [...new Set(products.flatMap(p => p.colors.map(c => c.name)))];
 
   const filteredProducts = useMemo(() => {
     let result = [...products];
