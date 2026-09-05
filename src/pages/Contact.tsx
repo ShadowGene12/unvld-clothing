@@ -105,9 +105,11 @@ const Contact: React.FC = () => {
             <form onSubmit={handleSubmit} className="space-y-6">
               <div>
                 <label className="block text-sm font-medium mb-2">Name *</label>
+                {/* Security: Limit input length to prevent DoS */}
                 <input
                   type="text"
                   name="name"
+                  maxLength={100}
                   value={formData.name}
                   onChange={handleChange}
                   required
@@ -117,9 +119,11 @@ const Contact: React.FC = () => {
 
               <div>
                 <label className="block text-sm font-medium mb-2">Email *</label>
+                {/* Security: Limit input length to prevent DoS */}
                 <input
                   type="email"
                   name="email"
+                  maxLength={100}
                   value={formData.email}
                   onChange={handleChange}
                   required
@@ -148,8 +152,10 @@ const Contact: React.FC = () => {
 
               <div>
                 <label className="block text-sm font-medium mb-2">Message *</label>
+                {/* Security: Limit input length to prevent DoS */}
                 <textarea
                   name="message"
+                  maxLength={1000}
                   value={formData.message}
                   onChange={handleChange}
                   required
