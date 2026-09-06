@@ -64,8 +64,11 @@ const Header: React.FC = () => {
                 onMouseLeave={() => setIsWorldsOpen(false)}
               >
                 <button
+                  onClick={() => setIsWorldsOpen(!isWorldsOpen)}
+                  aria-expanded={isWorldsOpen}
+                  aria-haspopup="menu"
                   className={cn(
-                    'flex items-center gap-1 text-sm tracking-wide py-1',
+                    'flex items-center gap-1 text-sm tracking-wide py-1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 rounded-sm',
                     location.pathname.includes('/worlds') && 'font-medium'
                   )}
                 >
@@ -74,12 +77,26 @@ const Header: React.FC = () => {
                 </button>
                 {isWorldsOpen && (
                   <div className="absolute top-full left-0 pt-2 animate-fade-in">
-                    <div className="bg-background border border-border shadow-lg min-w-[200px]">
-                      <Link to="/worlds" className="block px-4 py-3 text-sm hover:bg-accent transition-colors border-b border-border">
+                    <div
+                      className="bg-background border border-border shadow-lg min-w-[200px]"
+                      role="menu"
+                    >
+                      <Link
+                        to="/worlds"
+                        className="block px-4 py-3 text-sm hover:bg-accent transition-colors border-b border-border focus-visible:bg-accent focus-visible:outline-none"
+                        role="menuitem"
+                        onClick={() => setIsWorldsOpen(false)}
+                      >
                         All Worlds
                       </Link>
                       {collections.map(c => (
-                        <Link key={c.slug} to={`/worlds/${c.slug}`} className="block px-4 py-3 text-sm hover:bg-accent transition-colors">
+                        <Link
+                          key={c.slug}
+                          to={`/worlds/${c.slug}`}
+                          className="block px-4 py-3 text-sm hover:bg-accent transition-colors focus-visible:bg-accent focus-visible:outline-none"
+                          role="menuitem"
+                          onClick={() => setIsWorldsOpen(false)}
+                        >
                           {c.name}
                         </Link>
                       ))}
