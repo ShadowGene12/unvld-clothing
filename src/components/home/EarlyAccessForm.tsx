@@ -5,7 +5,7 @@ import * as z from 'zod';
 import { motion, AnimatePresence } from 'framer-motion';
 
 const formSchema = z.object({
-  email: z.string().email('Please enter a valid email address.'),
+  email: z.string().email('Please enter a valid email address.').max(100, 'Email is too long'),
 });
 
 type FormData = z.infer<typeof formSchema>;
@@ -48,9 +48,11 @@ const EarlyAccessForm: React.FC = () => {
             <form onSubmit={handleSubmit(onSubmit)} className="max-w-md mx-auto space-y-2">
               <div className="flex flex-col sm:flex-row gap-3">
                 <label htmlFor="email" className="sr-only">Email address</label>
+                {/* Security: Add maxLength to limit input size and prevent DoS attacks */}
                 <input
                   id="email"
                   type="email"
+                  maxLength={100}
                   {...register('email')}
                   placeholder="Your email"
                   className={`flex-1 px-5 py-4 bg-transparent border ${errors.email ? 'border-red-500' : 'border-border'} text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-foreground transition-colors text-sm`}
