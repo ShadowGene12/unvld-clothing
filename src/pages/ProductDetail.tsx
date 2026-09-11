@@ -93,10 +93,10 @@ const ProductDetail: React.FC = () => {
               <img src={product.images[selectedImage]} alt={product.name} className="w-full h-full object-cover" />
               {product.images.length > 1 && (
                 <>
-                  <button onClick={prevImage} className="absolute left-4 top-1/2 -translate-y-1/2 w-10 h-10 bg-background/80 flex items-center justify-center hover:bg-background transition-colors" aria-label="Previous image">
+                  <button onClick={prevImage} className="absolute left-4 top-1/2 -translate-y-1/2 w-10 h-10 bg-background/80 flex items-center justify-center hover:bg-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2" aria-label="Previous image">
                     <ChevronLeft className="w-5 h-5" />
                   </button>
-                  <button onClick={nextImage} className="absolute right-4 top-1/2 -translate-y-1/2 w-10 h-10 bg-background/80 flex items-center justify-center hover:bg-background transition-colors" aria-label="Next image">
+                  <button onClick={nextImage} className="absolute right-4 top-1/2 -translate-y-1/2 w-10 h-10 bg-background/80 flex items-center justify-center hover:bg-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2" aria-label="Next image">
                     <ChevronRight className="w-5 h-5" />
                   </button>
                 </>
@@ -125,7 +125,8 @@ const ProductDetail: React.FC = () => {
                   <button
                     key={index}
                     onClick={() => setSelectedImage(index)}
-                    className={`w-20 h-24 bg-muted overflow-hidden border-2 transition-colors ${selectedImage === index ? 'border-foreground' : 'border-transparent'}`}
+                    className={`w-20 h-24 bg-muted overflow-hidden border-2 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 ${selectedImage === index ? 'border-foreground' : 'border-transparent'}`}
+                    aria-current={selectedImage === index ? "true" : undefined}
                   >
                     <img src={img} alt={`${product.name} ${index + 1}`} className="w-full h-full object-cover" />
                   </button>
@@ -171,7 +172,8 @@ const ProductDetail: React.FC = () => {
                   <button
                     key={color.name}
                     onClick={() => setSelectedColor(color.name)}
-                    className={`w-10 h-10 rounded-full border-2 transition-all ${selectedColor === color.name ? 'border-foreground scale-110' : 'border-border hover:border-muted-foreground'}`}
+                    className={`w-10 h-10 rounded-full border-2 transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 ${selectedColor === color.name ? 'border-foreground scale-110' : 'border-border hover:border-muted-foreground'}`}
+                    aria-pressed={selectedColor === color.name}
                     style={{ backgroundColor: color.hex }}
                     title={color.name}
                     aria-label={color.name}
@@ -191,7 +193,8 @@ const ProductDetail: React.FC = () => {
                   <button
                     key={size}
                     onClick={() => setSelectedSize(size)}
-                    className={`min-w-[48px] px-4 py-2 border text-sm font-medium transition-colors ${selectedSize === size ? 'border-foreground bg-foreground text-background' : 'border-border hover:border-foreground'}`}
+                    className={`min-w-[48px] px-4 py-2 border text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 ${selectedSize === size ? 'border-foreground bg-foreground text-background' : 'border-border hover:border-foreground'}`}
+                    aria-pressed={selectedSize === size}
                   >
                     {size}
                   </button>
@@ -203,11 +206,11 @@ const ProductDetail: React.FC = () => {
             <div className="mb-8">
               <p className="text-sm font-medium mb-3">Quantity</p>
               <div className="flex items-center border border-border w-fit">
-                <button onClick={() => setQuantity(Math.max(1, quantity - 1))} className="p-3 hover:bg-accent transition-colors" aria-label="Decrease quantity">
+                <button onClick={() => setQuantity(Math.max(1, quantity - 1))} className="p-3 hover:bg-accent transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2" aria-label="Decrease quantity">
                   <Minus className="w-4 h-4" />
                 </button>
                 <span className="w-12 text-center font-medium">{quantity}</span>
-                <button onClick={() => setQuantity(quantity + 1)} className="p-3 hover:bg-accent transition-colors" aria-label="Increase quantity">
+                <button onClick={() => setQuantity(quantity + 1)} className="p-3 hover:bg-accent transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2" aria-label="Increase quantity">
                   <Plus className="w-4 h-4" />
                 </button>
               </div>
