@@ -4,8 +4,9 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
 import { motion, AnimatePresence } from 'framer-motion';
 
+// Security Enhancement: Added input length limit (.max()) to mitigate Denial of Service (DoS) risks
 const formSchema = z.object({
-  email: z.string().email('Please enter a valid email address.'),
+  email: z.string().email('Please enter a valid email address.').max(255, "Email is too long"),
 });
 
 type FormData = z.infer<typeof formSchema>;
@@ -55,6 +56,7 @@ const EarlyAccessForm: React.FC = () => {
                   placeholder="Your email"
                   className={`flex-1 px-5 py-4 bg-transparent border ${errors.email ? 'border-red-500' : 'border-border'} text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-foreground transition-colors text-sm`}
                   disabled={isSubmitting}
+                  maxLength={255}
                 />
                 <button
                   type="submit"
