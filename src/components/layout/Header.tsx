@@ -62,24 +62,33 @@ const Header: React.FC = () => {
                 className="relative"
                 onMouseEnter={() => setIsWorldsOpen(true)}
                 onMouseLeave={() => setIsWorldsOpen(false)}
+                onBlur={(e) => {
+                  if (!e.currentTarget.contains(e.relatedTarget)) {
+                    setIsWorldsOpen(false);
+                  }
+                }}
               >
                 <button
                   className={cn(
-                    'flex items-center gap-1 text-sm tracking-wide py-1',
+                    'flex items-center gap-1 text-sm tracking-wide py-1 rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2',
                     location.pathname.includes('/worlds') && 'font-medium'
                   )}
+                  onClick={() => setIsWorldsOpen(prev => !prev)}
+                  aria-expanded={isWorldsOpen}
+                  aria-haspopup="true"
+                  aria-controls={isWorldsOpen ? "worlds-menu" : undefined}
                 >
                   Worlds
                   <ChevronDown className={cn('w-4 h-4 transition-transform duration-200', isWorldsOpen && 'rotate-180')} />
                 </button>
                 {isWorldsOpen && (
-                  <div className="absolute top-full left-0 pt-2 animate-fade-in">
+                  <div id="worlds-menu" className="absolute top-full left-0 pt-2 animate-fade-in">
                     <div className="bg-background border border-border shadow-lg min-w-[200px]">
-                      <Link to="/worlds" className="block px-4 py-3 text-sm hover:bg-accent transition-colors border-b border-border">
+                      <Link to="/worlds" className="block px-4 py-3 text-sm hover:bg-accent transition-colors border-b border-border focus-visible:bg-accent focus-visible:outline-none">
                         All Worlds
                       </Link>
                       {collections.map(c => (
-                        <Link key={c.slug} to={`/worlds/${c.slug}`} className="block px-4 py-3 text-sm hover:bg-accent transition-colors">
+                        <Link key={c.slug} to={`/worlds/${c.slug}`} className="block px-4 py-3 text-sm hover:bg-accent transition-colors focus-visible:bg-accent focus-visible:outline-none">
                           {c.name}
                         </Link>
                       ))}
