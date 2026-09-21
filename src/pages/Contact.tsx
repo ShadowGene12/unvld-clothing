@@ -109,6 +109,7 @@ const Contact: React.FC = () => {
                   type="text"
                   name="name"
                   value={formData.name}
+                  maxLength={100} // Security: Prevent DoS by limiting input size
                   onChange={handleChange}
                   required
                   className="w-full px-4 py-3 border border-border bg-background focus:outline-none focus:border-foreground transition-colors"
@@ -121,6 +122,7 @@ const Contact: React.FC = () => {
                   type="email"
                   name="email"
                   value={formData.email}
+                  maxLength={255} // Security: Prevent DoS by limiting input size
                   onChange={handleChange}
                   required
                   className="w-full px-4 py-3 border border-border bg-background focus:outline-none focus:border-foreground transition-colors"
@@ -151,6 +153,7 @@ const Contact: React.FC = () => {
                 <textarea
                   name="message"
                   value={formData.message}
+                  maxLength={5000} // Security: Prevent DoS by limiting input size
                   onChange={handleChange}
                   required
                   rows={5}
