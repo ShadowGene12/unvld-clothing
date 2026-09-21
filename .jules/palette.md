@@ -1,0 +1,3 @@
+## 2024-05-14 - Accessible Hover Dropdowns with React
+**Learning:** When making hover-based menus accessible, standard CSS `:focus-within` doesn't automatically close the menu when focus leaves. By using React's `onBlur` event on the container wrapper, we can check `if (!e.currentTarget.contains(e.relatedTarget))` to ensure we only close the dropdown when focus moves entirely outside of the component (e.g. to the next header item) and not just when moving focus between items inside the dropdown itself.
+**Action:** Use this robust `onBlur` pattern to supplement `onClick` and `focus-visible` when upgrading custom hover dropdown components for accessibility.
