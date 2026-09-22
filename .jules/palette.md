@@ -1,0 +1,3 @@
+## 2025-03-01 - Add keyboard accessibility to Worlds dropdown
+**Learning:** Hover-only dropdown menus require significant accessibility scaffolding. Adding `onMouseEnter`/`onMouseLeave` is not enough for keyboard and screen reader users. We must implement an `onClick` toggle alongside explicit `focus-visible` styles and appropriate ARIA attributes (`aria-expanded`, `aria-haspopup`, `aria-controls`), and manage focus correctly with an `onBlur` handler to close the menu.
+**Action:** Always implement hover-based custom dropdowns using an ARIA Disclosure pattern utilizing `aria-expanded`, `onClick`, `onBlur`, and standard tab navigation. Ensure focus states are handled properly and visually presented using `focus-visible`.
