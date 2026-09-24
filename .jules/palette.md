@@ -1,0 +1,3 @@
+## 2024-05-18 - Making Hover Dropdowns Accessible
+**Learning:** Adding accessibility to hover-based dropdown menus that lack standard menuitem children requires an explicit toggle handler (onClick), keyboard focus engagement (onFocus, onBlur with outside click detection `if (!e.currentTarget.contains(e.relatedTarget))`), explicit `focus-visible` styles, and ARIA Disclosure attributes (`aria-expanded`, `aria-haspopup`).
+**Action:** When working on navigation menus, I should apply this disclosure pattern to transform pure hover states into fully keyboard-accessible interactions.
