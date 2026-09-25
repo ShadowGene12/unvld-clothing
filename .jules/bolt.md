@@ -1,0 +1,3 @@
+## 2024-03-24 - React Derived Arrays and Performance
+**Learning:** Derived arrays (like unique categories mapped from static data) defined inside a React component will recalculate on every render, even if the underlying static data never changes, causing unnecessary performance overhead.
+**Action:** Always move definitions of arrays or complex objects derived from static module-level imports outside of the React component's scope so they evaluate only once.
