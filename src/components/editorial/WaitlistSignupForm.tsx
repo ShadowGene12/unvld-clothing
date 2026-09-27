@@ -18,10 +18,11 @@ import { Check } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 const formSchema = z.object({
-  name: z.string().min(2, "Name is required"),
-  email: z.string().email("Valid email is required"),
-  instagram: z.string().optional(),
-  city: z.string().optional(),
+  // SECURITY: Prevent extremely long inputs to mitigate DoS risks
+  name: z.string().min(2, "Name is required").max(100, "Name is too long"),
+  email: z.string().email("Valid email is required").max(255, "Email is too long"),
+  instagram: z.string().max(30, "Instagram handle is too long").optional(),
+  city: z.string().max(100, "City name is too long").optional(),
   consent: z.boolean().refine(val => val === true, "Please accept to continue"),
 });
 
@@ -100,7 +101,7 @@ const WaitlistSignupForm = ({
               <FormItem>
                 <FormLabel>Name</FormLabel>
                 <FormControl>
-                  <Input placeholder="Your name" {...field} />
+                  <Input placeholder="Your name" {...field} maxLength={100} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -114,7 +115,7 @@ const WaitlistSignupForm = ({
               <FormItem>
                 <FormLabel>Email</FormLabel>
                 <FormControl>
-                  <Input type="email" placeholder="your@email.com" {...field} />
+                  <Input type="email" placeholder="your@email.com" {...field} maxLength={255} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -131,7 +132,7 @@ const WaitlistSignupForm = ({
                 <FormItem>
                   <FormLabel>Instagram (optional)</FormLabel>
                   <FormControl>
-                    <Input placeholder="@handle" {...field} />
+                    <Input placeholder="@handle" {...field} maxLength={30} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -145,7 +146,7 @@ const WaitlistSignupForm = ({
                 <FormItem>
                   <FormLabel>City (optional)</FormLabel>
                   <FormControl>
-                    <Input placeholder="Your city" {...field} />
+                    <Input placeholder="Your city" {...field} maxLength={100} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>

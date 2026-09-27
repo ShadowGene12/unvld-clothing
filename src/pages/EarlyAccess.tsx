@@ -39,13 +39,14 @@ const EarlyAccess = () => {
           <form onSubmit={handleSubmit} className="space-y-6">
             <div className="space-y-4">
               <div className="space-y-2">
+                {/* SECURITY: Prevent extremely long inputs to mitigate DoS risks */}
                 <Label htmlFor="name" className="text-xs uppercase tracking-wider text-muted-foreground">Name</Label>
-                <Input id="name" required className="border-0 border-b border-border rounded-none px-0 focus-visible:ring-0 focus-visible:border-foreground bg-transparent" />
+                <Input id="name" required className="border-0 border-b border-border rounded-none px-0 focus-visible:ring-0 focus-visible:border-foreground bg-transparent" maxLength={100} />
               </div>
               
               <div className="space-y-2">
                 <Label htmlFor="email" className="text-xs uppercase tracking-wider text-muted-foreground">Email</Label>
-                <Input id="email" type="email" required className="border-0 border-b border-border rounded-none px-0 focus-visible:ring-0 focus-visible:border-foreground bg-transparent" />
+                <Input id="email" type="email" required className="border-0 border-b border-border rounded-none px-0 focus-visible:ring-0 focus-visible:border-foreground bg-transparent" maxLength={255} />
               </div>
 
               <div className="space-y-2">
@@ -65,7 +66,7 @@ const EarlyAccess = () => {
 
               <div className="space-y-2">
                 <Label htmlFor="instagram" className="text-xs uppercase tracking-wider text-muted-foreground">Instagram (Optional)</Label>
-                <Input id="instagram" className="border-0 border-b border-border rounded-none px-0 focus-visible:ring-0 focus-visible:border-foreground bg-transparent" />
+                <Input id="instagram" className="border-0 border-b border-border rounded-none px-0 focus-visible:ring-0 focus-visible:border-foreground bg-transparent" maxLength={30} />
               </div>
             </div>
 
