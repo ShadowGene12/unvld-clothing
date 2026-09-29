@@ -62,12 +62,21 @@ const Header: React.FC = () => {
                 className="relative"
                 onMouseEnter={() => setIsWorldsOpen(true)}
                 onMouseLeave={() => setIsWorldsOpen(false)}
+                onBlur={(e) => {
+                  if (!e.currentTarget.contains(e.relatedTarget)) {
+                    setIsWorldsOpen(false);
+                  }
+                }}
               >
                 <button
                   className={cn(
-                    'flex items-center gap-1 text-sm tracking-wide py-1',
+                    'flex items-center gap-1 text-sm tracking-wide py-1 rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2',
                     location.pathname.includes('/worlds') && 'font-medium'
                   )}
+                  onClick={() => setIsWorldsOpen(prev => !prev)}
+                  onFocus={() => setIsWorldsOpen(true)}
+                  aria-expanded={isWorldsOpen}
+                  aria-haspopup="true"
                 >
                   Worlds
                   <ChevronDown className={cn('w-4 h-4 transition-transform duration-200', isWorldsOpen && 'rotate-180')} />
