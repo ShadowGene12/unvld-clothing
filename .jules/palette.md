@@ -1,0 +1,3 @@
+## 2024-05-19 - Mobile Race Conditions in Mixed Interaction Patterns
+**Learning:** When mixing hover (`onMouseEnter`/`onMouseLeave`) and click (`onClick`) patterns for accessibility or multi-modal interaction in React, applying `onMouseEnter` to a parent container and `onClick` to a child toggle creates race conditions on touch devices. Tapping triggers an emulated `mouseenter` followed by a `click`, causing immediate open-then-close toggling and breaking the interface on phones.
+**Action:** Always filter emulated touch events from `onMouseEnter` handlers using `if (e.nativeEvent.sourceCapabilities?.firesTouchEvents) return;` or explicitly branch interactions by `pointerType` when building multi-modal toggles.
