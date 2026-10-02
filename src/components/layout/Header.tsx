@@ -62,10 +62,19 @@ const Header: React.FC = () => {
                 className="relative"
                 onMouseEnter={() => setIsWorldsOpen(true)}
                 onMouseLeave={() => setIsWorldsOpen(false)}
+                onFocus={() => setIsWorldsOpen(true)}
+                onBlur={(e) => {
+                  if (!e.currentTarget.contains(e.relatedTarget)) {
+                    setIsWorldsOpen(false);
+                  }
+                }}
               >
                 <button
+                  aria-expanded={isWorldsOpen}
+                  aria-haspopup="true"
+                  onClick={() => setIsWorldsOpen(prev => !prev)}
                   className={cn(
-                    'flex items-center gap-1 text-sm tracking-wide py-1',
+                    'flex items-center gap-1 text-sm tracking-wide py-1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2',
                     location.pathname.includes('/worlds') && 'font-medium'
                   )}
                 >
