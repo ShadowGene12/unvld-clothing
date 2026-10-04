@@ -1,0 +1,3 @@
+## 2024-10-04 - Hover-based Dropdown Accessibility
+**Learning:** The "Worlds" dropdown menu relied exclusively on `onMouseEnter`/`onMouseLeave` without keyboard bindings or ARIA attributes, making it inaccessible to keyboard and screen-reader users. Implementing an ARIA disclosure pattern with `onFocus`, `onBlur`, and `onClick` handlers provides correct parity for keyboard users.
+**Action:** Always complement hover-based navigation interactions with `onClick` and `onFocus`/`onBlur` equivalents, utilizing `e.currentTarget.contains(e.relatedTarget)` to manage complex internal focus state transitions smoothly.
