@@ -1,0 +1,3 @@
+## 2024-10-04 - Optimize React Re-renders by Hoisting Derived Data
+**Learning:** In React components that derive data from static module-level imports (like `products` in this application), declaring derived arrays (`categories`, `sizes`, `colors`) inside the component body causes them to be recalculated on every render, even though the source data never changes.
+**Action:** Always hoist variables derived purely from static data to the module level outside the component. This prevents unnecessary `O(n)` recalculations on each render and reduces memory churn, especially with functions like `.map()` or `.flatMap()`.
