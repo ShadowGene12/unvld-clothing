@@ -1,0 +1,3 @@
+## 2024-05-18 - Adding Accessibility to Hover-Based Dropdowns
+**Learning:** In this application, interactive components like dropdown menus often rely solely on mouse events (`onMouseEnter`/`onMouseLeave`) to function. This makes them inaccessible to keyboard users and screen readers, violating WCAG standards.
+**Action:** When working on hover-based components in this design system, always implement an `onClick` toggle and an `onFocus` handler alongside explicit `focus-visible` styles and appropriate ARIA attributes (`aria-expanded`, `aria-haspopup`, `aria-controls`) to ensure full keyboard and screen reader accessibility.
