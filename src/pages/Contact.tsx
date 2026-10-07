@@ -111,6 +111,7 @@ const Contact: React.FC = () => {
                   value={formData.name}
                   onChange={handleChange}
                   required
+                  maxLength={100}
                   className="w-full px-4 py-3 border border-border bg-background focus:outline-none focus:border-foreground transition-colors"
                 />
               </div>
@@ -123,6 +124,7 @@ const Contact: React.FC = () => {
                   value={formData.email}
                   onChange={handleChange}
                   required
+                  maxLength={100}
                   className="w-full px-4 py-3 border border-border bg-background focus:outline-none focus:border-foreground transition-colors"
                 />
               </div>
@@ -153,6 +155,7 @@ const Contact: React.FC = () => {
                   value={formData.message}
                   onChange={handleChange}
                   required
+                  maxLength={1000}
                   rows={5}
                   className="w-full px-4 py-3 border border-border bg-background focus:outline-none focus:border-foreground transition-colors resize-none"
                 />
