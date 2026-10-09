@@ -1,0 +1,3 @@
+## 2024-10-09 - Accessible Dropdown Menu
+**Learning:** Dropdowns depending solely on `onMouseEnter` and `onMouseLeave` are entirely invisible to keyboard and screen reader users. Adding `onFocus`, an interactive `onBlur` that checks if focus has left the menu via `e.currentTarget.contains(e.relatedTarget)`, and `onClick` actions for toggling and item selection creates a flawless desktop and accessible experience without complex third-party tools.
+**Action:** Always implement hover-based menus with dual interactions: `onMouseEnter`/`onMouseLeave` for mouse users and `onFocus`/`onBlur` + `onClick` for keyboard users, backed by `aria-expanded`, `aria-haspopup`, and robust `focus-visible` styles.
