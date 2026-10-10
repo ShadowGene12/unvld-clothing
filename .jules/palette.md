@@ -1,0 +1,3 @@
+## 2024-10-10 - Adding keyboard accessibility to custom hover-based components
+**Learning:** Custom hover-based components (like dropdown menus) that previously relied solely on mouse events (`onMouseEnter`/`onMouseLeave`) present a significant accessibility barrier as they cannot be accessed or dismissed via keyboard navigation alone.
+**Action:** Always implement an `onClick` toggle, an `onFocus` handler (to open on keyboard Tab), and an `onBlur` handler (checking if `e.currentTarget.contains(e.relatedTarget)` to close when focus moves away) alongside explicit `focus-visible` styles and appropriate ARIA attributes (`aria-expanded`, `aria-haspopup`) to ensure full keyboard accessibility.
