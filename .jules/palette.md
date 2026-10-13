@@ -1,0 +1,3 @@
+## 2024-05-24 - Interactive Dropdown Accessibility
+**Learning:** Custom hover-based navigation dropdowns in this application often lack keyboard accessibility because they rely strictly on `onMouseEnter`/`onMouseLeave`.
+**Action:** Always implement `onFocus`/`onBlur` handlers, `onClick` toggles, `focus-visible` styles, and ARIA attributes for custom interactive components to ensure full keyboard navigation support.
