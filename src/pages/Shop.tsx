@@ -7,7 +7,50 @@ import ProductCard from '@/components/product/ProductCard';
 
 type SortOption = 'newest' | 'bestselling' | 'price-asc' | 'price-desc';
 
+
+// ⚡ BOLT OPTIMIZATION: Moved derived filter constants outside the component
+// to avoid unnecessary array processing and memory allocation on every render.
+const categories = [...new Set(products.map(p => p.category))];
+const sizes = [...new Set(products.flatMap(p => p.sizes))];
+const colors = [...new Set(products.flatMap(p => p.colors.map(c => c.name)))];
+
+// ⚡ BOLT OPTIMIZATION: Moved nested component outside the main component
+// to prevent it from being redefined on every render, which improves performance.
+const FilterSelect = ({
+  label,
+  value,
+  options,
+  onChange,
+}: {
+  label: string;
+  value: string;
+  options: { value: string; label: string }[];
+  onChange: (value: string) => void;
+}) => (
+  <div className="space-y-2">
+    <label className="text-xs font-medium tracking-wider uppercase text-muted-foreground">
+      {label}
+    </label>
+    <div className="relative">
+      <select
+        value={value}
+        onChange={e => onChange(e.target.value)}
+        className="w-full appearance-none px-4 py-3 bg-background border border-border text-sm focus:outline-none focus:border-foreground transition-colors cursor-pointer"
+      >
+        <option value="">All</option>
+        {options.map(opt => (
+          <option key={opt.value} value={opt.value}>
+            {opt.label}
+          </option>
+        ))}
+      </select>
+      <ChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 pointer-events-none" />
+    </div>
+  </div>
+);
+
 const Shop: React.FC = () => {
+
   const [isFiltersOpen, setIsFiltersOpen] = useState(false);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [isArchiveView, setIsArchiveView] = useState(false);
@@ -19,9 +62,6 @@ const Shop: React.FC = () => {
   const [priceRange, setPriceRange] = useState<[number, number]>([0, 500]);
   const [sortBy, setSortBy] = useState<SortOption>('newest');
 
-  const categories = [...new Set(products.map(p => p.category))];
-  const sizes = [...new Set(products.flatMap(p => p.sizes))];
-  const colors = [...new Set(products.flatMap(p => p.colors.map(c => c.name)))];
 
   const filteredProducts = useMemo(() => {
     let result = [...products];
@@ -81,38 +121,6 @@ const Shop: React.FC = () => {
     setPriceRange([0, 500]);
   };
 
-  const FilterSelect = ({
-    label,
-    value,
-    options,
-    onChange,
-  }: {
-    label: string;
-    value: string;
-    options: { value: string; label: string }[];
-    onChange: (value: string) => void;
-  }) => (
-    <div className="space-y-2">
-      <label className="text-xs font-medium tracking-wider uppercase text-muted-foreground">
-        {label}
-      </label>
-      <div className="relative">
-        <select
-          value={value}
-          onChange={e => onChange(e.target.value)}
-          className="w-full appearance-none px-4 py-3 bg-background border border-border text-sm focus:outline-none focus:border-foreground transition-colors cursor-pointer"
-        >
-          <option value="">All</option>
-          {options.map(opt => (
-            <option key={opt.value} value={opt.value}>
-              {opt.label}
-            </option>
-          ))}
-        </select>
-        <ChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 pointer-events-none" />
-      </div>
-    </div>
-  );
 
   return (
     <>
