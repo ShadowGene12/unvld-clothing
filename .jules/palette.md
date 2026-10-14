@@ -1,0 +1,3 @@
+## 2024-05-24 - Accessible Hover Menus
+**Learning:** Dropdowns reliant purely on onMouseEnter/onMouseLeave are inaccessible to keyboard users, requiring explicit onFocus/onBlur wrapper handlers, toggleable onClick states, and full ARIA implementations to function correctly via Tab navigation in React.
+**Action:** Always implement a full suite of mouse and keyboard event handlers with associated ARIA states and focus-visible styling for interactive hover components.
