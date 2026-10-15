@@ -62,10 +62,20 @@ const Header: React.FC = () => {
                 className="relative"
                 onMouseEnter={() => setIsWorldsOpen(true)}
                 onMouseLeave={() => setIsWorldsOpen(false)}
+                onFocus={() => setIsWorldsOpen(true)}
+                onBlur={(e) => {
+                  if (!e.currentTarget.contains(e.relatedTarget)) {
+                    setIsWorldsOpen(false);
+                  }
+                }}
               >
                 <button
+                  onClick={() => setIsWorldsOpen(!isWorldsOpen)}
+                  aria-haspopup="true"
+                  aria-expanded={isWorldsOpen}
+                  aria-controls="desktop-worlds-menu"
                   className={cn(
-                    'flex items-center gap-1 text-sm tracking-wide py-1',
+                    'flex items-center gap-1 text-sm tracking-wide py-1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary',
                     location.pathname.includes('/worlds') && 'font-medium'
                   )}
                 >
@@ -74,7 +84,7 @@ const Header: React.FC = () => {
                 </button>
                 {isWorldsOpen && (
                   <div className="absolute top-full left-0 pt-2 animate-fade-in">
-                    <div className="bg-background border border-border shadow-lg min-w-[200px]">
+                    <div id="desktop-worlds-menu" role="menu" className="bg-background border border-border shadow-lg min-w-[200px]">
                       <Link to="/worlds" className="block px-4 py-3 text-sm hover:bg-accent transition-colors border-b border-border">
                         All Worlds
                       </Link>
@@ -156,12 +166,18 @@ const Header: React.FC = () => {
               <Link to="/" className="block py-3 text-lg border-b border-border">Home</Link>
 
               <div className="py-3 border-b border-border">
-                <button onClick={() => setIsWorldsOpen(!isWorldsOpen)} className="flex items-center justify-between w-full text-lg">
+                <button
+                  onClick={() => setIsWorldsOpen(!isWorldsOpen)}
+                  aria-haspopup="true"
+                  aria-expanded={isWorldsOpen}
+                  aria-controls="mobile-worlds-menu"
+                  className="flex items-center justify-between w-full text-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+                >
                   Worlds
                   <ChevronDown className={cn('w-5 h-5 transition-transform duration-200', isWorldsOpen && 'rotate-180')} />
                 </button>
                 {isWorldsOpen && (
-                  <div className="mt-2 pl-4 space-y-2">
+                  <div id="mobile-worlds-menu" role="menu" className="mt-2 pl-4 space-y-2">
                     <Link to="/worlds" className="block py-2 text-muted-foreground">All Worlds</Link>
                     {collections.map(c => (
                       <Link key={c.slug} to={`/worlds/${c.slug}`} className="block py-2 text-muted-foreground">
