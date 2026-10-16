@@ -52,6 +52,7 @@ const Footer: React.FC = () => {
             </p>
             <form onSubmit={handleNewsletterSubmit} className="flex gap-2">
               <input
+                aria-label="Email address"
                 type="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
