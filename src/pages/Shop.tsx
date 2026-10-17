@@ -7,6 +7,14 @@ import ProductCard from '@/components/product/ProductCard';
 
 type SortOption = 'newest' | 'bestselling' | 'price-asc' | 'price-desc';
 
+// ⚡ Bolt Performance Optimization
+// Moving these derived arrays outside the component prevents recalculating them
+// and creating new Set/Array objects on every render.
+// This saves O(N) operations per render where N is the number of products.
+const categories = [...new Set(products.map(p => p.category))];
+const sizes = [...new Set(products.flatMap(p => p.sizes))];
+const colors = [...new Set(products.flatMap(p => p.colors.map(c => c.name)))];
+
 const Shop: React.FC = () => {
   const [isFiltersOpen, setIsFiltersOpen] = useState(false);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -19,9 +27,6 @@ const Shop: React.FC = () => {
   const [priceRange, setPriceRange] = useState<[number, number]>([0, 500]);
   const [sortBy, setSortBy] = useState<SortOption>('newest');
 
-  const categories = [...new Set(products.map(p => p.category))];
-  const sizes = [...new Set(products.flatMap(p => p.sizes))];
-  const colors = [...new Set(products.flatMap(p => p.colors.map(c => c.name)))];
 
   const filteredProducts = useMemo(() => {
     let result = [...products];
