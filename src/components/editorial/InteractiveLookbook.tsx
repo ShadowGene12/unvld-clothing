@@ -39,14 +39,23 @@ const InteractiveLookbook = ({ imageUrl, alt, hotspots }: InteractiveLookbookPro
           style={{ left: `${hotspot.x}%`, top: `${hotspot.y}%`, transform: 'translate(-50%, -50%)' }}
           onMouseEnter={() => setActiveHotspot(hotspot.id)}
           onMouseLeave={() => setActiveHotspot(null)}
+          onBlur={(e) => {
+            if (!e.currentTarget.contains(e.relatedTarget)) {
+              setActiveHotspot(null);
+            }
+          }}
         >
           {/* Pulse animation ring */}
           <div className="absolute inset-0 rounded-full bg-white/40 animate-ping" />
           
           {/* Hotspot button */}
           <button 
-            className="relative w-8 h-8 bg-background text-foreground rounded-full flex items-center justify-center shadow-lg transition-transform hover:scale-110 focus:outline-none"
+            className="relative w-8 h-8 bg-background text-foreground rounded-full flex items-center justify-center shadow-lg transition-transform hover:scale-110 focus:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
             aria-label={`View ${hotspot.product.name}`}
+            aria-expanded={activeHotspot === hotspot.id}
+            aria-haspopup="dialog"
+            onClick={() => setActiveHotspot(activeHotspot === hotspot.id ? null : hotspot.id)}
+            onFocus={() => setActiveHotspot(hotspot.id)}
           >
             <Plus className="w-4 h-4 transition-transform duration-300" style={{ transform: activeHotspot === hotspot.id ? 'rotate(45deg)' : 'none' }} />
           </button>
