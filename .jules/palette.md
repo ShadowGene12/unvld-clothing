@@ -1,0 +1,1 @@
+## 2024-10-17 - Interactive Hotspot Accessibility **Learning:** Hover-based tooltips require onClick, onFocus, and onBlur handlers alongside focus-visible styles and ARIA attributes to be fully accessible to keyboard and screen reader users. **Action:** Always implement comprehensive keyboard event handlers and ARIA state management for custom interactive elements.
