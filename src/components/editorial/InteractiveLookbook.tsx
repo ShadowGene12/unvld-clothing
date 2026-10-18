@@ -38,15 +38,26 @@ const InteractiveLookbook = ({ imageUrl, alt, hotspots }: InteractiveLookbookPro
           className="absolute z-10"
           style={{ left: `${hotspot.x}%`, top: `${hotspot.y}%`, transform: 'translate(-50%, -50%)' }}
           onMouseEnter={() => setActiveHotspot(hotspot.id)}
-          onMouseLeave={() => setActiveHotspot(null)}
+          onMouseLeave={(e) => { if (!e.currentTarget.contains(e.relatedTarget as Node)) setActiveHotspot(null); }}
+          onFocus={() => setActiveHotspot(hotspot.id)}
+          onBlur={(e) => { if (!e.currentTarget.contains(e.relatedTarget as Node)) setActiveHotspot(null); }}
         >
           {/* Pulse animation ring */}
           <div className="absolute inset-0 rounded-full bg-white/40 animate-ping" />
           
           {/* Hotspot button */}
           <button 
-            className="relative w-8 h-8 bg-background text-foreground rounded-full flex items-center justify-center shadow-lg transition-transform hover:scale-110 focus:outline-none"
+            className="relative w-8 h-8 bg-background text-foreground rounded-full flex items-center justify-center shadow-lg transition-transform hover:scale-110 focus-visible:ring-2 focus-visible:ring-foreground focus-visible:outline-none"
             aria-label={`View ${hotspot.product.name}`}
+            onClick={(e) => {
+              e.preventDefault();
+              // For touch devices, mouseenter fires first, opening it.
+              // If it's already open, we toggle it off.
+              setActiveHotspot(activeHotspot === hotspot.id ? null : hotspot.id);
+            }}
+            aria-expanded={activeHotspot === hotspot.id}
+            aria-haspopup="dialog"
+            aria-controls={`tooltip-${hotspot.id}`}
           >
             <Plus className="w-4 h-4 transition-transform duration-300" style={{ transform: activeHotspot === hotspot.id ? 'rotate(45deg)' : 'none' }} />
           </button>
@@ -55,6 +66,7 @@ const InteractiveLookbook = ({ imageUrl, alt, hotspots }: InteractiveLookbookPro
           <AnimatePresence>
             {activeHotspot === hotspot.id && (
               <motion.div
+                id={`tooltip-${hotspot.id}`}
                 initial={{ opacity: 0, y: 10, scale: 0.95 }}
                 animate={{ opacity: 1, y: 0, scale: 1 }}
                 exit={{ opacity: 0, y: 10, scale: 0.95 }}
