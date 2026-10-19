@@ -1,0 +1,3 @@
+## 2024-10-25 - Desktop Navigation Hover Menu Accessibility
+**Learning:** Custom hover-based navigation menus using onMouseEnter and onMouseLeave are completely inaccessible to keyboard users as they cannot trigger hover states.
+**Action:** Always complement mouse events with onFocus and onBlur handlers, and add an onClick toggle with e.preventDefault to prevent touch double-triggers along with focus-visible styles and ARIA attributes for aria-expanded, aria-haspopup, and aria-controls.
