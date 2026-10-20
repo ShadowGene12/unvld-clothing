@@ -1,0 +1,3 @@
+## 2024-10-24 - Hover-based Dropdown Accessibility
+**Learning:** Dropdown menus relying solely on onMouseEnter/onMouseLeave are inaccessible to keyboard users and behave inconsistently on touch devices.
+**Action:** When implementing custom hover components, always include onFocus/onBlur with relatedTarget checks for keyboard support, add onClick with preventDefault() for touch devices, and include explicit focus-visible styling alongside aria-expanded/aria-haspopup.
