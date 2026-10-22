@@ -108,6 +108,7 @@ const Contact: React.FC = () => {
                 <input
                   type="text"
                   name="name"
+                  maxLength={100}
                   value={formData.name}
                   onChange={handleChange}
                   required
@@ -120,6 +121,7 @@ const Contact: React.FC = () => {
                 <input
                   type="email"
                   name="email"
+                  maxLength={254}
                   value={formData.email}
                   onChange={handleChange}
                   required
@@ -150,6 +152,7 @@ const Contact: React.FC = () => {
                 <label className="block text-sm font-medium mb-2">Message *</label>
                 <textarea
                   name="message"
+                  maxLength={2000}
                   value={formData.message}
                   onChange={handleChange}
                   required
