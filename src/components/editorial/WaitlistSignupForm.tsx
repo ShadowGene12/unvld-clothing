@@ -18,10 +18,10 @@ import { Check } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 const formSchema = z.object({
-  name: z.string().min(2, "Name is required"),
-  email: z.string().email("Valid email is required"),
-  instagram: z.string().optional(),
-  city: z.string().optional(),
+  name: z.string().min(2, "Name is required").max(100, "Name is too long"),
+  email: z.string().email("Valid email is required").max(254, "Email is too long"),
+  instagram: z.string().max(50, "Instagram handle is too long").optional(),
+  city: z.string().max(100, "City name is too long").optional(),
   consent: z.boolean().refine(val => val === true, "Please accept to continue"),
 });
 
@@ -100,7 +100,8 @@ const WaitlistSignupForm = ({
               <FormItem>
                 <FormLabel>Name</FormLabel>
                 <FormControl>
-                  <Input placeholder="Your name" {...field} />
+                  {/* Security: Added maxLength to prevent excessive input sizes */}
+                  <Input placeholder="Your name" maxLength={100} {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -114,7 +115,8 @@ const WaitlistSignupForm = ({
               <FormItem>
                 <FormLabel>Email</FormLabel>
                 <FormControl>
-                  <Input type="email" placeholder="your@email.com" {...field} />
+                  {/* Security: Added maxLength to prevent excessive input sizes */}
+                  <Input type="email" placeholder="your@email.com" maxLength={254} {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -131,7 +133,8 @@ const WaitlistSignupForm = ({
                 <FormItem>
                   <FormLabel>Instagram (optional)</FormLabel>
                   <FormControl>
-                    <Input placeholder="@handle" {...field} />
+                    {/* Security: Added maxLength to prevent excessive input sizes */}
+                    <Input placeholder="@handle" maxLength={50} {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -145,7 +148,8 @@ const WaitlistSignupForm = ({
                 <FormItem>
                   <FormLabel>City (optional)</FormLabel>
                   <FormControl>
-                    <Input placeholder="Your city" {...field} />
+                    {/* Security: Added maxLength to prevent excessive input sizes */}
+                    <Input placeholder="Your city" maxLength={100} {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
