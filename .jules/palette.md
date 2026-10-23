@@ -1,0 +1,3 @@
+## 2023-10-24 - Accessible Hover Dropdowns
+**Learning:** Custom hover-based dropdown menus that only use onMouseEnter and onMouseLeave are inaccessible to keyboard and touch users.
+**Action:** Always implement onClick toggles with e.preventDefault(), alongside onFocus and onBlur handlers checking e.currentTarget.contains(e.relatedTarget), and add aria-expanded, aria-haspopup, and focus-visible styles.
