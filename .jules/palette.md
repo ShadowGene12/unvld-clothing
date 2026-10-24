@@ -1,0 +1,3 @@
+## 2024-10-24 - Interactive Hover Menus and Keyboard Accessibility
+**Learning:** Hover-based dropdown menus in the header navigation were completely inaccessible to keyboard users because they relied exclusively on `onMouseEnter` and `onMouseLeave` without `onClick`, `onFocus`, or `onBlur` handlers, and they lacked visual focus indicators for users tabbing through the navigation.
+**Action:** When implementing custom hover menus, always include keyboard event handlers (`onFocus`, `onBlur`, `onClick` with `e.preventDefault()` for touch) alongside explicit `focus-visible` styles and appropriate ARIA attributes (`aria-expanded`, `aria-haspopup`, `aria-controls`) to ensure the interactive element is fully accessible to all users.
