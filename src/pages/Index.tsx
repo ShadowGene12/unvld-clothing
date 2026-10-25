@@ -11,7 +11,8 @@ import WorldsGrid from '@/components/home/WorldsGrid';
 import EarlyAccessForm from '@/components/home/EarlyAccessForm';
 
 const Index: React.FC = () => {
-  const featured = [...getNewProducts(), ...getBestsellers()].slice(0, 4);
+  // Optimize: Memoize featured pieces so we don't recalculate array spreads and slicing on every render
+  const featured = React.useMemo(() => [...getNewProducts(), ...getBestsellers()].slice(0, 4), []);
 
   return (
     <>
