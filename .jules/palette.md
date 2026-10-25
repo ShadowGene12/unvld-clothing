@@ -1,0 +1,1 @@
+## 2024-03-24 - Dropdown Keyboard and Touch Accessibility **Learning:** Custom hover-based components like dropdown menus often lack keyboard navigation (tabbing) and touch device support out of the box. **Action:** Always add onFocus, onBlur, onClick with e.preventDefault(), ARIA attributes, and explicit focus-visible styles to hover components.
