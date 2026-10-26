@@ -37,8 +37,10 @@ const Header: React.FC = () => {
             {/* Mobile Menu Toggle */}
             <button
               onClick={() => setIsMobileMenuOpen(true)}
-              className="lg:hidden p-2 -ml-2 hover:bg-accent transition-colors"
+              className="lg:hidden p-2 -ml-2 hover:bg-accent transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-4 rounded-sm"
               aria-label="Open menu"
+              aria-expanded={isMobileMenuOpen}
+              aria-haspopup="true"
             >
               <Menu className="w-6 h-6" />
             </button>
@@ -52,7 +54,7 @@ const Header: React.FC = () => {
             <nav className="hidden lg:flex items-center gap-8">
               <Link
                 to="/"
-                className={cn('text-sm tracking-wide link-underline py-1', location.pathname === '/' && 'font-medium')}
+                className={cn('text-sm tracking-wide link-underline py-1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-4 rounded-sm', location.pathname === '/' && 'font-medium')}
               >
                 Home
               </Link>
@@ -62,10 +64,23 @@ const Header: React.FC = () => {
                 className="relative"
                 onMouseEnter={() => setIsWorldsOpen(true)}
                 onMouseLeave={() => setIsWorldsOpen(false)}
+                onFocus={() => setIsWorldsOpen(true)}
+                onBlur={(e) => {
+                  if (!e.currentTarget.contains(e.relatedTarget)) {
+                    setIsWorldsOpen(false);
+                  }
+                }}
               >
                 <button
+                  onClick={(e) => {
+                    e.preventDefault();
+                    setIsWorldsOpen(!isWorldsOpen);
+                  }}
+                  aria-expanded={isWorldsOpen}
+                  aria-haspopup="true"
+                  aria-controls="desktop-worlds-menu"
                   className={cn(
-                    'flex items-center gap-1 text-sm tracking-wide py-1',
+                    'flex items-center gap-1 text-sm tracking-wide py-1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-4 rounded-sm',
                     location.pathname.includes('/worlds') && 'font-medium'
                   )}
                 >
@@ -73,13 +88,13 @@ const Header: React.FC = () => {
                   <ChevronDown className={cn('w-4 h-4 transition-transform duration-200', isWorldsOpen && 'rotate-180')} />
                 </button>
                 {isWorldsOpen && (
-                  <div className="absolute top-full left-0 pt-2 animate-fade-in">
-                    <div className="bg-background border border-border shadow-lg min-w-[200px]">
-                      <Link to="/worlds" className="block px-4 py-3 text-sm hover:bg-accent transition-colors border-b border-border">
+                  <div id="desktop-worlds-menu" className="absolute top-full left-0 pt-2 animate-fade-in">
+                    <div className="bg-background border border-border shadow-lg min-w-[200px] flex flex-col">
+                      <Link to="/worlds" className="px-4 py-3 text-sm hover:bg-accent transition-colors border-b border-border focus-visible:outline-none focus-visible:bg-accent focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary">
                         All Worlds
                       </Link>
                       {collections.map(c => (
-                        <Link key={c.slug} to={`/worlds/${c.slug}`} className="block px-4 py-3 text-sm hover:bg-accent transition-colors">
+                        <Link key={c.slug} to={`/worlds/${c.slug}`} className="px-4 py-3 text-sm hover:bg-accent transition-colors focus-visible:outline-none focus-visible:bg-accent focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary">
                           {c.name}
                         </Link>
                       ))}
@@ -90,25 +105,25 @@ const Header: React.FC = () => {
 
               <Link
                 to="/journal"
-                className={cn('text-sm tracking-wide link-underline py-1', location.pathname === '/journal' && 'font-medium')}
+                className={cn('text-sm tracking-wide link-underline py-1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-4 rounded-sm', location.pathname === '/journal' && 'font-medium')}
               >
                 Journal
               </Link>
               <Link
                 to="/dream-fund"
-                className={cn('text-sm tracking-wide link-underline py-1', location.pathname === '/dream-fund' && 'font-medium')}
+                className={cn('text-sm tracking-wide link-underline py-1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-4 rounded-sm', location.pathname === '/dream-fund' && 'font-medium')}
               >
                 Dream Fund
               </Link>
               <Link
                 to="/about"
-                className={cn('text-sm tracking-wide link-underline py-1', location.pathname === '/about' && 'font-medium')}
+                className={cn('text-sm tracking-wide link-underline py-1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-4 rounded-sm', location.pathname === '/about' && 'font-medium')}
               >
                 About
               </Link>
               <Link
                 to="/shop"
-                className={cn('text-sm tracking-wide link-underline py-1 text-muted-foreground', location.pathname === '/shop' && 'font-medium text-foreground')}
+                className={cn('text-sm tracking-wide link-underline py-1 text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-4 rounded-sm', location.pathname === '/shop' && 'font-medium text-foreground')}
               >
                 Shop
               </Link>
@@ -126,7 +141,7 @@ const Header: React.FC = () => {
               <GlobalAudio />
               <button
                 onClick={() => setIsCartOpen(true)}
-                className="relative p-2 -mr-2 md:mr-0 hover:bg-accent transition-colors"
+                className="relative p-2 -mr-2 md:mr-0 hover:bg-accent transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-4 rounded-sm"
                 aria-label="Open cart"
               >
                 <ShoppingBag className="w-6 h-6" />
@@ -148,7 +163,7 @@ const Header: React.FC = () => {
           <div className="absolute inset-y-0 left-0 w-full max-w-sm bg-background animate-slide-in-right">
             <div className="flex items-center justify-between p-4 border-b border-border">
               <span className="text-lg font-semibold tracking-[0.2em] uppercase">UNVLD</span>
-              <button onClick={() => setIsMobileMenuOpen(false)} className="p-2 hover:bg-accent transition-colors" aria-label="Close menu">
+              <button onClick={() => setIsMobileMenuOpen(false)} className="p-2 hover:bg-accent transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-4 rounded-sm" aria-label="Close menu">
                 <X className="w-6 h-6" />
               </button>
             </div>
@@ -156,12 +171,17 @@ const Header: React.FC = () => {
               <Link to="/" className="block py-3 text-lg border-b border-border">Home</Link>
 
               <div className="py-3 border-b border-border">
-                <button onClick={() => setIsWorldsOpen(!isWorldsOpen)} className="flex items-center justify-between w-full text-lg">
+                <button
+                  onClick={() => setIsWorldsOpen(!isWorldsOpen)}
+                  aria-expanded={isWorldsOpen}
+                  aria-controls="mobile-worlds-menu"
+                  className="flex items-center justify-between w-full text-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-4 rounded-sm"
+                >
                   Worlds
                   <ChevronDown className={cn('w-5 h-5 transition-transform duration-200', isWorldsOpen && 'rotate-180')} />
                 </button>
                 {isWorldsOpen && (
-                  <div className="mt-2 pl-4 space-y-2">
+                  <div id="mobile-worlds-menu" className="mt-2 pl-4 space-y-2">
                     <Link to="/worlds" className="block py-2 text-muted-foreground">All Worlds</Link>
                     {collections.map(c => (
                       <Link key={c.slug} to={`/worlds/${c.slug}`} className="block py-2 text-muted-foreground">
