@@ -62,10 +62,22 @@ const Header: React.FC = () => {
                 className="relative"
                 onMouseEnter={() => setIsWorldsOpen(true)}
                 onMouseLeave={() => setIsWorldsOpen(false)}
+                onFocus={() => setIsWorldsOpen(true)}
+                onBlur={(e) => {
+                  if (!e.currentTarget.contains(e.relatedTarget)) {
+                    setIsWorldsOpen(false);
+                  }
+                }}
               >
                 <button
+                  onClick={(e) => {
+                    e.preventDefault();
+                    setIsWorldsOpen(!isWorldsOpen);
+                  }}
+                  aria-expanded={isWorldsOpen}
+                  aria-haspopup="true"
                   className={cn(
-                    'flex items-center gap-1 text-sm tracking-wide py-1',
+                    'flex items-center gap-1 text-sm tracking-wide py-1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary rounded-sm',
                     location.pathname.includes('/worlds') && 'font-medium'
                   )}
                 >
@@ -156,7 +168,12 @@ const Header: React.FC = () => {
               <Link to="/" className="block py-3 text-lg border-b border-border">Home</Link>
 
               <div className="py-3 border-b border-border">
-                <button onClick={() => setIsWorldsOpen(!isWorldsOpen)} className="flex items-center justify-between w-full text-lg">
+                <button
+                  onClick={() => setIsWorldsOpen(!isWorldsOpen)}
+                  aria-expanded={isWorldsOpen}
+                  aria-haspopup="true"
+                  className="flex items-center justify-between w-full text-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary rounded-sm"
+                >
                   Worlds
                   <ChevronDown className={cn('w-5 h-5 transition-transform duration-200', isWorldsOpen && 'rotate-180')} />
                 </button>
