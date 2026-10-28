@@ -93,4 +93,5 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
   );
 };
 
-export default ProductCard;
+// Performance optimization: Wrapped with React.memo to prevent unnecessary re-renders in grids
+export default React.memo(ProductCard);
