@@ -61,11 +61,28 @@ const Header: React.FC = () => {
               <div
                 className="relative"
                 onMouseEnter={() => setIsWorldsOpen(true)}
-                onMouseLeave={() => setIsWorldsOpen(false)}
+                onMouseLeave={(e) => {
+                  if (!e.currentTarget.contains(e.relatedTarget as Node)) {
+                    setIsWorldsOpen(false);
+                  }
+                }}
+                onBlur={(e) => {
+                  if (!e.currentTarget.contains(e.relatedTarget as Node)) {
+                    setIsWorldsOpen(false);
+                  }
+                }}
               >
                 <button
+                  onClick={(e) => {
+                    e.preventDefault();
+                    setIsWorldsOpen(!isWorldsOpen);
+                  }}
+                  onFocus={() => setIsWorldsOpen(true)}
+                  aria-expanded={isWorldsOpen}
+                  aria-haspopup="true"
+                  aria-controls="worlds-dropdown"
                   className={cn(
-                    'flex items-center gap-1 text-sm tracking-wide py-1',
+                    'flex items-center gap-1 text-sm tracking-wide py-1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary rounded-sm',
                     location.pathname.includes('/worlds') && 'font-medium'
                   )}
                 >
@@ -73,7 +90,7 @@ const Header: React.FC = () => {
                   <ChevronDown className={cn('w-4 h-4 transition-transform duration-200', isWorldsOpen && 'rotate-180')} />
                 </button>
                 {isWorldsOpen && (
-                  <div className="absolute top-full left-0 pt-2 animate-fade-in">
+                  <div id="worlds-dropdown" className="absolute top-full left-0 pt-2 animate-fade-in">
                     <div className="bg-background border border-border shadow-lg min-w-[200px]">
                       <Link to="/worlds" className="block px-4 py-3 text-sm hover:bg-accent transition-colors border-b border-border">
                         All Worlds
