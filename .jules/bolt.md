@@ -1,0 +1,1 @@
+## 2024-11-01 - Route Code Splitting **Learning:** Large bundle sizes delay initial page load due to parsing all routes upfront. Vite warns about large chunk sizes. **Action:** Use React.lazy and Suspense to dynamically import route components, reducing the main bundle size.
