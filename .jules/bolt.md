@@ -1,0 +1,3 @@
+## 2024-11-20 - [Performance] Implement Code-Splitting in React
+**Learning:** When implementing code-splitting with React.lazy and Suspense inside framer-motion's <AnimatePresence>, you must place the unique key prop (e.g., key={location.pathname}) on the <Suspense> wrapper instead of its inner children (like <Routes>) to ensure AnimatePresence correctly tracks component changes and triggers exit animations without regressions.
+**Action:** Use React.lazy and Suspense in AnimatedRoutes, and pass the key to the Suspense component.
