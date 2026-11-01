@@ -10,6 +10,7 @@ const Header: React.FC = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isWorldsOpen, setIsWorldsOpen] = useState(false);
+  const [isDropdownFocused, setIsDropdownFocused] = useState(false);
   const { itemCount, setIsCartOpen } = useCart();
   const location = useLocation();
 
@@ -62,17 +63,37 @@ const Header: React.FC = () => {
                 className="relative"
                 onMouseEnter={() => setIsWorldsOpen(true)}
                 onMouseLeave={() => setIsWorldsOpen(false)}
+                onFocus={() => setIsDropdownFocused(true)}
+                onBlur={(e) => {
+                  if (!e.currentTarget.contains(e.relatedTarget)) {
+                    setIsDropdownFocused(false);
+                    setIsWorldsOpen(false);
+                  }
+                }}
               >
                 <button
+                  onClick={(e) => {
+                    e.preventDefault();
+                    // Toggle based on the combined open state
+                    const isOpen = isWorldsOpen || isDropdownFocused;
+                    if (isOpen) {
+                      setIsWorldsOpen(false);
+                      setIsDropdownFocused(false);
+                    } else {
+                      setIsWorldsOpen(true);
+                    }
+                  }}
+                  aria-expanded={isWorldsOpen || isDropdownFocused}
+                  aria-haspopup="true"
                   className={cn(
-                    'flex items-center gap-1 text-sm tracking-wide py-1',
+                    'flex items-center gap-1 text-sm tracking-wide py-1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary rounded-sm',
                     location.pathname.includes('/worlds') && 'font-medium'
                   )}
                 >
                   Worlds
-                  <ChevronDown className={cn('w-4 h-4 transition-transform duration-200', isWorldsOpen && 'rotate-180')} />
+                  <ChevronDown className={cn('w-4 h-4 transition-transform duration-200', (isWorldsOpen || isDropdownFocused) && 'rotate-180')} />
                 </button>
-                {isWorldsOpen && (
+                {(isWorldsOpen || isDropdownFocused) && (
                   <div className="absolute top-full left-0 pt-2 animate-fade-in">
                     <div className="bg-background border border-border shadow-lg min-w-[200px]">
                       <Link to="/worlds" className="block px-4 py-3 text-sm hover:bg-accent transition-colors border-b border-border">

@@ -1,0 +1,3 @@
+## 2024-11-01 - Dropdown Keyboard Accessibility Fix
+**Learning:** React dropdown menus relying solely on onMouseEnter/onMouseLeave are not accessible via keyboard tab navigation or friendly to touch devices, leading to navigation barriers.
+**Action:** Adding an onClick toggle, onFocus, onBlur, proper focus styles (focus-visible:ring), and ARIA attributes (aria-expanded, aria-haspopup) makes the dropdown fully accessible while preserving the hover behavior for mouse users.
