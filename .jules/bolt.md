@@ -1,0 +1,3 @@
+## 2025-05-18 - Route level code splitting
+**Learning:** Code-splitting pages using React.lazy and Suspense reduces the initial bundle size significantly, which leads to a faster initial load time. When using framer-motion AnimatePresence, we need to apply the key directly to the Suspense component instead of inner Routes to ensure exit animations work correctly without regressions.
+**Action:** Use code-splitting to chunk application bundles for heavy pages on route level but keep keys accurate for Framer Motion transitions.
