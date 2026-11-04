@@ -1,39 +1,42 @@
+import React, { Suspense } from "react";
 import { Routes, Route, useLocation, Navigate } from "react-router-dom";
 import { AnimatePresence } from "framer-motion";
 import AnimatedPage from "@/components/layout/AnimatedPage";
 
 // Pages
-import Index from "@/pages/Index";
-import Shop from "@/pages/Shop";
-import Worlds from "@/pages/Worlds";
-import WorldPage from "@/pages/WorldPage";
-import PieceDetail from "@/pages/PieceDetail";
-import CampaignLanding from "@/pages/CampaignLanding";
-import ProductDetail from "@/pages/ProductDetail";
-import DreamFund from "@/pages/DreamFund";
-import About from "@/pages/About";
-import FindYourLine from "@/pages/FindYourLine";
-import Quiz from "@/pages/Quiz";
-import Result from "@/pages/Result";
-import Journal from "@/pages/Journal";
-import EarlyAccess from "@/pages/EarlyAccess";
-import Notify from "@/pages/Notify";
-import Admin from "@/pages/Admin";
-import SizeGuide from "@/pages/SizeGuide";
-import Shipping from "@/pages/Shipping";
-import Returns from "@/pages/Returns";
-import FAQ from "@/pages/FAQ";
-import Contact from "@/pages/Contact";
-import Terms from "@/pages/Terms";
-import Privacy from "@/pages/Privacy";
-import NotFound from "@/pages/NotFound";
+const Index = React.lazy(() => import("@/pages/Index"));
+const Shop = React.lazy(() => import("@/pages/Shop"));
+const Worlds = React.lazy(() => import("@/pages/Worlds"));
+const WorldPage = React.lazy(() => import("@/pages/WorldPage"));
+const PieceDetail = React.lazy(() => import("@/pages/PieceDetail"));
+const CampaignLanding = React.lazy(() => import("@/pages/CampaignLanding"));
+const ProductDetail = React.lazy(() => import("@/pages/ProductDetail"));
+const DreamFund = React.lazy(() => import("@/pages/DreamFund"));
+const About = React.lazy(() => import("@/pages/About"));
+const FindYourLine = React.lazy(() => import("@/pages/FindYourLine"));
+const Quiz = React.lazy(() => import("@/pages/Quiz"));
+const Result = React.lazy(() => import("@/pages/Result"));
+const Journal = React.lazy(() => import("@/pages/Journal"));
+const EarlyAccess = React.lazy(() => import("@/pages/EarlyAccess"));
+const Notify = React.lazy(() => import("@/pages/Notify"));
+const Admin = React.lazy(() => import("@/pages/Admin"));
+const SizeGuide = React.lazy(() => import("@/pages/SizeGuide"));
+const Shipping = React.lazy(() => import("@/pages/Shipping"));
+const Returns = React.lazy(() => import("@/pages/Returns"));
+const FAQ = React.lazy(() => import("@/pages/FAQ"));
+const Contact = React.lazy(() => import("@/pages/Contact"));
+const Terms = React.lazy(() => import("@/pages/Terms"));
+const Privacy = React.lazy(() => import("@/pages/Privacy"));
+const NotFound = React.lazy(() => import("@/pages/NotFound"));
 
 const AnimatedRoutes = () => {
   const location = useLocation();
 
   return (
     <AnimatePresence mode="wait">
-      <Routes location={location} key={location.pathname}>
+      {/* Bolt optimization: code-split routes using React.lazy and Suspense */}
+      <Suspense key={location.pathname} fallback={<div className="min-h-screen bg-background" />}>
+        <Routes location={location}>
         <Route path="/" element={<AnimatedPage><Index /></AnimatedPage>} />
         <Route path="/shop" element={<AnimatedPage><Shop /></AnimatedPage>} />
         <Route path="/worlds" element={<AnimatedPage><Worlds /></AnimatedPage>} />
@@ -61,6 +64,7 @@ const AnimatedRoutes = () => {
         <Route path="/privacy" element={<AnimatedPage><Privacy /></AnimatedPage>} />
         <Route path="*" element={<AnimatedPage><NotFound /></AnimatedPage>} />
       </Routes>
+      </Suspense>
     </AnimatePresence>
   );
 };
