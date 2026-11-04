@@ -1,0 +1,3 @@
+## 2024-05-18 - Code Splitting Routes
+**Learning:** In a large React app with many routes, importing all route components synchronously causes a large initial bundle size (over 500kB). Code-splitting routes using React.lazy() and Suspense allows fetching page components only when they are needed.
+**Action:** Use React.lazy() and Suspense for route components in AnimatedRoutes.tsx to reduce the initial JS bundle size.
