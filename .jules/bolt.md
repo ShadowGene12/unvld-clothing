@@ -1,0 +1,3 @@
+## 2024-05-18 - Optimized React Router bundle sizes with code splitting
+**Learning:** In a single-page React app with multiple routes, loading all page components synchronously in a single bundle can block the main thread and delay the initial paint, creating a poor user experience. Code-splitting route components allows individual pages to be loaded lazily on demand.
+**Action:** Implemented React.lazy and Suspense inside the AnimatedRoutes component for all page imports. Placed the key={location.pathname} prop on the <Suspense> wrapper (instead of <Routes>) inside framer-motion's <AnimatePresence> to ensure exit animations track properly and work seamlessly without regressions.
