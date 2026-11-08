@@ -1,0 +1,3 @@
+## 2025-02-18 - Hover-based Dropdown Accessibility
+**Learning:** Dropdowns in this app that rely solely on onMouseEnter/onMouseLeave are inaccessible to keyboard users because they cannot be triggered by Tab.
+**Action:** When implementing custom hover-based components, implement an onClick toggle that includes e.preventDefault(), an onFocus handler to open on keyboard Tab, and an onBlur handler checking if e.currentTarget.contains(e.relatedTarget) to close when focus moves away, alongside explicit focus-visible styles and appropriate ARIA attributes (aria-expanded, aria-haspopup, aria-controls).
