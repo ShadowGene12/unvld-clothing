@@ -1,0 +1,3 @@
+## 2024-11-10 - Accessibility for Custom Hover Dropdowns
+**Learning:** When custom dropdown menus in React components rely solely on mouse events (onMouseEnter/onMouseLeave), they are inaccessible to keyboard and touch users.
+**Action:** Always implement an onClick toggle that includes e.preventDefault() (to prevent touch devices from instantly closing it after the simulated mouseenter), an onFocus handler (to open on keyboard Tab), and an onBlur handler (e.g., checking if e.currentTarget.contains(e.relatedTarget) to close when focus moves away) alongside explicit focus-visible styles and appropriate ARIA attributes (aria-expanded, aria-haspopup, aria-controls).
