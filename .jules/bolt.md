@@ -1,0 +1,3 @@
+## 2024-05-24 - Optimizing page loads with React lazy
+**Learning:** The application bundle size was large due to all page components being imported synchronously in AnimatedRoutes.tsx. When using framer-motion's `<AnimatePresence>` for page transitions, the `key` prop needs to be on the immediate child of `<AnimatePresence>`. When wrapping `<Routes>` with `<Suspense>`, the `key={location.pathname}` MUST be moved from `<Routes>` to `<Suspense>` so that framer-motion tracks the route changes correctly and triggers the exit animations.
+**Action:** Next time implementing code splitting with React.lazy and Suspense inside AnimatePresence, I will ensure the unique key prop is on the Suspense wrapper, not its inner children.
