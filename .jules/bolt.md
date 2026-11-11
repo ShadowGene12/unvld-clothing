@@ -1,0 +1,3 @@
+## 2024-11-11 - Framer Motion and Code Splitting
+**Learning:** When combining framer-motion's AnimatePresence with React.lazy and Suspense, the unique key prop MUST be placed on the Suspense wrapper instead of its inner children (like Routes) to ensure AnimatePresence correctly tracks component changes and triggers exit animations without regressions.
+**Action:** Always verify key placement when introducing Suspense boundaries within AnimatePresence components.
